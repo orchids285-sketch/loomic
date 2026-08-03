@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from "react";
 
-import { getSupabaseBrowserClient } from "./supabase-browser";
+import { getSupabaseBrowserClient, isSupabaseConfigured } from "./supabase-browser";
 
 interface AuthContextValue {
   user: User | null;
@@ -26,11 +26,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Without a project there is no session to wait for. Returning early is not just an
+    // optimisation: leaving it to fail would keep `loading` true forever, and every screen
+    // that gates on it would sit on a spinner with nothing coming.
+    if (!isSupabaseConfigured()) {
+      setLoading(false);
+      return;
+    }
+
     const supabase = getSupabaseBrowserClient();
 
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
       setUser(data.session?.user ?? null);
+      setLoading(false);
+    }).catch(() => {
+      // Unreachable is a state, not a crash: an unhandled rejection here would also leave
+      // the app loading forever.
       setLoading(false);
     });
 

@@ -10,7 +10,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Separator } from "./ui/separator";
 import { fetchViewer } from "../lib/server-api";
-import { getSupabaseBrowserClient } from "../lib/supabase-browser";
+import { getSupabaseBrowserClient, isSupabaseConfigured } from "../lib/supabase-browser";
 
 const stagger = {
   hidden: {},
@@ -33,7 +33,13 @@ export function LoginForm({ initialErrorMessage = null }: LoginFormProps) {
   const [mode, setMode] = useState<"magic" | "password">("magic");
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
-  const [error, setError] = useState<string | null>(initialErrorMessage);
+  // Say it before the attempt, not after. Against an unconfigured build every sign-in
+  // fails as an opaque network error, which reads as "this app is broken" rather than
+  // "this deployment has no backend yet".
+  const [error, setError] = useState<string | null>(
+    initialErrorMessage
+    ?? (isSupabaseConfigured() ? null : "Sign-in is not available on this deployment yet."),
+  );
 
   async function bootstrapWorkspace(accessToken: string) {
     try {
