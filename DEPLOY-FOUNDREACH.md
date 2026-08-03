@@ -13,6 +13,28 @@ app repo. What is left is standing the three pieces up.
 | Supabase | **supabase.com free tier** | auth, Postgres, storage and the PGMQ job queue — the server throws without it, by design |
 | `wl-loomic` | **Railway** (`proxies/wl-embed` in the app repo, `TOOL=loomic`) | strips the framing headers, hides Loomic's own login and pricing, carries the embed ticket |
 
+## What is already live
+
+**The web half is deployed: https://loomic-indol.vercel.app** (Vercel project `loomic`,
+team `naouelbenjemaa-9107s-projects`). It is the real interface and it needs no Railway,
+which is the reason it could ship while the rest could not.
+
+Two settings had to be right, and both fail with the same misleading message
+(*"No Next.js version detected"*): the project's **framework must be `null`**, not
+`nextjs` — the root `package.json` of this pnpm workspace has no `next` dependency, so
+detection fails at the root even though `apps/web` is a Next app — and the build must be
+declared explicitly. Passing them in the deployment body is not enough; the **project's
+stored settings win**, so PATCH the project:
+
+```
+framework=null
+installCommand=pnpm install --no-frozen-lockfile
+buildCommand=pnpm --filter @loomic/shared build && pnpm --filter @loomic/web build
+outputDirectory=apps/web/out
+```
+
+Signing in will fail until Supabase exists. That is the expected state, not a regression.
+
 ## Steps
 
 **1. Supabase.** Create a project, then from this directory:
@@ -54,7 +76,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=<anon key>
 
 ```bash
 railway up --service wl-loomic
-# UPSTREAM=https://<vercel domain>  TOOL=loomic  FR_BACKEND=https://<api>  BRAND=Images
+# UPSTREAM=https://loomic-indol.vercel.app  TOOL=loomic  FR_BACKEND=https://<api>  BRAND=Images
 ```
 
 **5. The app backend** needs, for the session mint:
