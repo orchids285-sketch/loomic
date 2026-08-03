@@ -322,12 +322,9 @@ export function ImageGeneratorPanel({
                         <Lock className="ml-1 inline h-2.5 w-2.5 text-muted-foreground" />
                       )}
                     </span>
-                    {typeof m.creditCost === "number" && (
-                      <span className="inline-flex items-center gap-0.5 text-[10px] tabular-nums text-muted-foreground">
-                        <Zap className="h-2.5 w-2.5" />
-                        {m.creditCost}
-                      </span>
-                    )}
+                    {/* The per-model credit price is gone with the account system: this build has
+                        no balance to spend from, so a number the user cannot act on is
+                        just noise beside the model name. */}
                     {m.id === model && (
                       <svg
                         className="h-3 w-3 text-foreground"

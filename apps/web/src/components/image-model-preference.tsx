@@ -181,12 +181,9 @@ export function ImageModelPreferencePopover({
                   </span>
                   <span className="flex items-center gap-1.5 text-[11px] leading-tight text-muted-foreground">
                     {m.description}
-                    {typeof m.creditCost === "number" && (
-                      <span className="inline-flex items-center gap-0.5 tabular-nums text-muted-foreground">
-                        <Zap className="h-2.5 w-2.5" />
-                        {m.creditCost}
-                      </span>
-                    )}
+                    {/* The per-model credit price is gone with the account system: this build has
+                        no balance to spend from, so a number the user cannot act on is
+                        just noise beside the model name. */}
                   </span>
                 </div>
                 {selected && (

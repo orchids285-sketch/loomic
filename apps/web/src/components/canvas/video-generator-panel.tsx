@@ -482,12 +482,9 @@ export function VideoGeneratorPanel({
                         <Lock className="ml-1 inline h-2.5 w-2.5 text-muted-foreground" />
                       )}
                     </span>
-                    {typeof m.creditCost === "number" && (
-                      <span className="inline-flex items-center gap-0.5 text-[10px] tabular-nums text-muted-foreground">
-                        <Zap className="h-2.5 w-2.5" />
-                        {m.creditCost}
-                      </span>
-                    )}
+                    {/* The per-model credit price is gone with the account system: this build has
+                        no balance to spend from, so a number the user cannot act on is
+                        just noise beside the model name. */}
                     {m.id === model && (
                       <svg
                         className="h-3 w-3 text-foreground"
@@ -525,11 +522,9 @@ export function VideoGeneratorPanel({
                 >
                   <path d="M6.9 4.36H5.385V.76c0-.84-.447-1.01-.991-.38L4 .835.677 4.685c-.457.525-.265.955.422.955h1.517v3.6c0 .84.446 1.01.991.38L4 9.165l3.323-3.85c.456-.525.265-.955-.422-.955" />
                 </svg>
-                {typeof currentModel?.creditCost === "number" && (
-                  <span className="text-xs tabular-nums">
-                    {currentModel.creditCost}
-                  </span>
-                )}
+                    {/* The per-model credit price is gone with the account system: this build has
+                        no balance to spend from, so a number the user cannot act on is
+                        just noise beside the model name. */}
               </>
             )}
           </button>
