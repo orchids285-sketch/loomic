@@ -1,7 +1,7 @@
 // @credits-system — Frontend API client for payments: checkout, subscription, cancellation, plan change
 import type { BillingPeriod, SubscriptionPlan } from "@loomic/shared";
 
-import { getServerBaseUrl } from "./env";
+import { getServerBaseUrl, serverFetch } from "./env";
 import { ApiAuthError, ApiApplicationError } from "./server-api";
 
 // ── Types ────────────────────────────────────────────────────
@@ -46,7 +46,7 @@ export async function createCheckout(
   plan: string,
   billingPeriod: string,
 ): Promise<{ checkoutUrl: string }> {
-  const response = await fetch(`${getServerBaseUrl()}/api/payments/checkout`, {
+  const response = await serverFetch(`/api/payments/checkout`, {
     method: "POST",
     headers: authJsonHeaders(accessToken),
     body: JSON.stringify({ plan, billingPeriod }),
@@ -58,8 +58,7 @@ export async function createCheckout(
 export async function getSubscription(
   accessToken: string,
 ): Promise<SubscriptionStatus> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/payments/subscription`,
+  const response = await serverFetch(`/api/payments/subscription`,
     { headers: authHeaders(accessToken) },
   );
   if (!response.ok) return handleErrorResponse(response);
@@ -69,7 +68,7 @@ export async function getSubscription(
 export async function cancelSubscription(
   accessToken: string,
 ): Promise<void> {
-  const response = await fetch(`${getServerBaseUrl()}/api/payments/cancel`, {
+  const response = await serverFetch(`/api/payments/cancel`, {
     method: "POST",
     headers: authHeaders(accessToken),
   });
@@ -81,8 +80,7 @@ export async function changePlan(
   plan: string,
   billingPeriod: string,
 ): Promise<void> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/payments/change-plan`,
+  const response = await serverFetch(`/api/payments/change-plan`,
     {
       method: "POST",
       headers: authJsonHeaders(accessToken),

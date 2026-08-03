@@ -27,7 +27,7 @@ import type {
   MarketplaceDetail,
 } from "@loomic/shared";
 
-import { getServerBaseUrl } from "./env";
+import { getServerBaseUrl, serverFetch } from "./env";
 import { dedupeRequest } from "./dedupe-request";
 
 // --- Error types ---
@@ -61,7 +61,7 @@ export async function createRun(
     headers.Authorization = `Bearer ${options.accessToken}`;
   }
 
-  const response = await fetch(`${getServerBaseUrl()}/api/agent/runs`, {
+  const response = await serverFetch(`/api/agent/runs`, {
     method: "POST",
     headers,
     body: JSON.stringify(payload),
@@ -100,7 +100,7 @@ async function handleErrorResponse(response: Response): Promise<never> {
 export async function fetchViewer(
   accessToken: string,
 ): Promise<ViewerResponse> {
-  const response = await fetch(`${getServerBaseUrl()}/api/viewer`, {
+  const response = await serverFetch(`/api/viewer`, {
     headers: authHeaders(accessToken),
   });
   if (!response.ok) return handleErrorResponse(response);
@@ -110,7 +110,7 @@ export async function fetchViewer(
 export async function fetchProjects(
   accessToken: string,
 ): Promise<ProjectListResponse> {
-  const response = await fetch(`${getServerBaseUrl()}/api/projects`, {
+  const response = await serverFetch(`/api/projects`, {
     headers: authHeaders(accessToken),
   });
   if (!response.ok) return handleErrorResponse(response);
@@ -121,7 +121,7 @@ export async function createProject(
   accessToken: string,
   data: ProjectCreateRequest,
 ): Promise<ProjectCreateResponse> {
-  const response = await fetch(`${getServerBaseUrl()}/api/projects`, {
+  const response = await serverFetch(`/api/projects`, {
     method: "POST",
     headers: authJsonHeaders(accessToken),
     body: JSON.stringify(data),
@@ -134,8 +134,7 @@ export async function deleteProject(
   accessToken: string,
   projectId: string,
 ): Promise<void> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/projects/${projectId}`,
+  const response = await serverFetch(`/api/projects/${projectId}`,
     {
       method: "DELETE",
       headers: authHeaders(accessToken),
@@ -148,8 +147,7 @@ export async function fetchProject(
   accessToken: string,
   projectId: string,
 ): Promise<{ project: { id: string; name: string; brand_kit_id: string | null } }> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/projects/${projectId}`,
+  const response = await serverFetch(`/api/projects/${projectId}`,
     { headers: authHeaders(accessToken) },
   );
   if (!response.ok) return handleErrorResponse(response);
@@ -161,8 +159,7 @@ export async function updateProject(
   projectId: string,
   data: ProjectUpdateRequest,
 ): Promise<void> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/projects/${projectId}`,
+  const response = await serverFetch(`/api/projects/${projectId}`,
     {
       method: "PATCH",
       headers: authJsonHeaders(accessToken),
@@ -178,8 +175,7 @@ export async function fetchCanvas(
   accessToken: string,
   canvasId: string,
 ): Promise<{ canvas: CanvasDetail }> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/canvases/${canvasId}`,
+  const response = await serverFetch(`/api/canvases/${canvasId}`,
     { headers: authHeaders(accessToken) },
   );
   if (!response.ok) return handleErrorResponse(response);
@@ -191,8 +187,7 @@ export async function saveCanvas(
   canvasId: string,
   content: { elements: Record<string, unknown>[]; appState: Record<string, unknown>; files: Record<string, Record<string, unknown>> },
 ): Promise<void> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/canvases/${canvasId}`,
+  const response = await serverFetch(`/api/canvases/${canvasId}`,
     {
       method: "PUT",
       headers: authJsonHeaders(accessToken),
@@ -209,8 +204,7 @@ export async function uploadThumbnail(
 ): Promise<void> {
   const formData = new FormData();
   formData.append("file", blob, "thumbnail.webp");
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/projects/${projectId}/thumbnail`,
+  const response = await serverFetch(`/api/projects/${projectId}/thumbnail`,
     {
       method: "PUT",
       headers: authHeaders(accessToken),
@@ -226,7 +220,7 @@ export async function updateProfile(
   accessToken: string,
   data: { displayName: string },
 ): Promise<ProfileUpdateResponse> {
-  const response = await fetch(`${getServerBaseUrl()}/api/viewer/profile`, {
+  const response = await serverFetch(`/api/viewer/profile`, {
     method: "PATCH",
     headers: authJsonHeaders(accessToken),
     body: JSON.stringify(data),
@@ -238,8 +232,7 @@ export async function updateProfile(
 export async function fetchWorkspaceSettings(
   accessToken: string,
 ): Promise<WorkspaceSettingsResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/workspace/settings`,
+  const response = await serverFetch(`/api/workspace/settings`,
     { headers: authHeaders(accessToken) },
   );
   if (!response.ok) return handleErrorResponse(response);
@@ -250,8 +243,7 @@ export async function updateWorkspaceSettings(
   accessToken: string,
   data: { defaultModel: string },
 ): Promise<WorkspaceSettingsResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/workspace/settings`,
+  const response = await serverFetch(`/api/workspace/settings`,
     {
       method: "PUT",
       headers: authJsonHeaders(accessToken),
@@ -263,7 +255,7 @@ export async function updateWorkspaceSettings(
 }
 
 export async function fetchModels(): Promise<ModelListResponse> {
-  const response = await fetch(`${getServerBaseUrl()}/api/models`);
+  const response = await serverFetch(`/api/models`);
   if (!response.ok) {
     throw new Error(`Failed to fetch models: ${response.status}`);
   }
@@ -277,8 +269,7 @@ export function fetchSessions(
   canvasId: string,
 ): Promise<SessionListResponse> {
   return dedupeRequest(`sessions:${canvasId}`, async () => {
-    const response = await fetch(
-      `${getServerBaseUrl()}/api/canvases/${canvasId}/sessions`,
+    const response = await serverFetch(`/api/canvases/${canvasId}/sessions`,
       { headers: authHeaders(accessToken) },
     );
     if (!response.ok) return handleErrorResponse(response);
@@ -291,8 +282,7 @@ export async function createSession(
   canvasId: string,
   title?: string,
 ): Promise<SessionCreateResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/canvases/${canvasId}/sessions`,
+  const response = await serverFetch(`/api/canvases/${canvasId}/sessions`,
     {
       method: "POST",
       headers: authJsonHeaders(accessToken),
@@ -308,8 +298,7 @@ export async function updateSessionTitle(
   sessionId: string,
   title: string,
 ): Promise<void> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/sessions/${sessionId}`,
+  const response = await serverFetch(`/api/sessions/${sessionId}`,
     {
       method: "PATCH",
       headers: authJsonHeaders(accessToken),
@@ -323,8 +312,7 @@ export async function deleteSession(
   accessToken: string,
   sessionId: string,
 ): Promise<void> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/sessions/${sessionId}`,
+  const response = await serverFetch(`/api/sessions/${sessionId}`,
     {
       method: "DELETE",
       headers: authHeaders(accessToken),
@@ -337,8 +325,7 @@ export async function fetchMessages(
   accessToken: string,
   sessionId: string,
 ): Promise<MessageListResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/sessions/${sessionId}/messages`,
+  const response = await serverFetch(`/api/sessions/${sessionId}/messages`,
     { headers: authHeaders(accessToken) },
   );
   if (!response.ok) return handleErrorResponse(response);
@@ -350,8 +337,7 @@ export async function saveMessage(
   sessionId: string,
   data: ChatMessageCreateRequest,
 ): Promise<MessageCreateResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/sessions/${sessionId}/messages`,
+  const response = await serverFetch(`/api/sessions/${sessionId}/messages`,
     {
       method: "POST",
       headers: authJsonHeaders(accessToken),
@@ -375,7 +361,7 @@ export async function uploadFile(
     formData.append("projectId", projectId);
   }
 
-  const response = await fetch(`${getServerBaseUrl()}/api/uploads`, {
+  const response = await serverFetch(`/api/uploads`, {
     method: "POST",
     headers: authHeaders(accessToken),
     body: formData,
@@ -388,8 +374,7 @@ export async function getAssetUrl(
   accessToken: string,
   assetId: string,
 ): Promise<AssetSignedUrlResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/uploads/${assetId}/url`,
+  const response = await serverFetch(`/api/uploads/${assetId}/url`,
     { headers: authHeaders(accessToken) },
   );
   if (!response.ok) return handleErrorResponse(response);
@@ -400,8 +385,7 @@ export async function deleteAsset(
   accessToken: string,
   assetId: string,
 ): Promise<void> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/uploads/${assetId}`,
+  const response = await serverFetch(`/api/uploads/${assetId}`,
     {
       method: "DELETE",
       headers: authHeaders(accessToken),
@@ -432,7 +416,7 @@ export type ImageModelInfo = {
 };
 
 export async function fetchImageModels(): Promise<{ models: ImageModelInfo[] }> {
-  const response = await fetch(`${getServerBaseUrl()}/api/image-models`);
+  const response = await serverFetch(`/api/image-models`);
   if (!response.ok) {
     throw new Error(`Failed to fetch image models: ${response.status}`);
   }
@@ -451,7 +435,7 @@ export type VideoModelInfo = {
 };
 
 export async function fetchVideoModels(): Promise<{ models: VideoModelInfo[] }> {
-  const response = await fetch(`${getServerBaseUrl()}/api/video-models`);
+  const response = await serverFetch(`/api/video-models`);
   if (!response.ok) {
     throw new Error(`Failed to fetch video models: ${response.status}`);
   }
@@ -463,8 +447,7 @@ export async function generateImageDirect(
   prompt: string,
   options?: { model?: string; aspectRatio?: string; quality?: string },
 ): Promise<GenerateImageResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/agent/generate-image`,
+  const response = await serverFetch(`/api/agent/generate-image`,
     {
       method: "POST",
       headers: authJsonHeaders(accessToken),
@@ -501,8 +484,7 @@ export async function generateVideoDirect(
     inputImages?: string[];
   },
 ): Promise<GenerateVideoResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/agent/generate-video`,
+  const response = await serverFetch(`/api/agent/generate-video`,
     {
       method: "POST",
       headers: authJsonHeaders(accessToken),
@@ -526,8 +508,7 @@ export async function fetchJob(
   accessToken: string,
   jobId: string,
 ): Promise<JobResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/jobs/${jobId}`,
+  const response = await serverFetch(`/api/jobs/${jobId}`,
     { headers: authHeaders(accessToken) },
   );
   if (!response.ok) return handleErrorResponse(response);
@@ -539,7 +520,7 @@ export async function fetchJob(
 export async function fetchSkills(
   accessToken: string,
 ): Promise<SkillListResponse> {
-  const response = await fetch(`${getServerBaseUrl()}/api/skills`, {
+  const response = await serverFetch(`/api/skills`, {
     headers: authHeaders(accessToken),
   });
   if (!response.ok) return handleErrorResponse(response);
@@ -550,7 +531,7 @@ export async function fetchSkillDetail(
   accessToken: string,
   id: string,
 ): Promise<SkillDetailResponse> {
-  const response = await fetch(`${getServerBaseUrl()}/api/skills/${id}`, {
+  const response = await serverFetch(`/api/skills/${id}`, {
     headers: authHeaders(accessToken),
   });
   if (!response.ok) return handleErrorResponse(response);
@@ -561,7 +542,7 @@ export async function createSkill(
   accessToken: string,
   data: SkillCreateRequest,
 ): Promise<SkillDetailResponse> {
-  const response = await fetch(`${getServerBaseUrl()}/api/skills`, {
+  const response = await serverFetch(`/api/skills`, {
     method: "POST",
     headers: authJsonHeaders(accessToken),
     body: JSON.stringify(data),
@@ -575,7 +556,7 @@ export async function updateSkill(
   id: string,
   data: SkillUpdateRequest,
 ): Promise<SkillDetailResponse> {
-  const response = await fetch(`${getServerBaseUrl()}/api/skills/${id}`, {
+  const response = await serverFetch(`/api/skills/${id}`, {
     method: "PUT",
     headers: authJsonHeaders(accessToken),
     body: JSON.stringify(data),
@@ -588,7 +569,7 @@ export async function deleteSkill(
   accessToken: string,
   id: string,
 ): Promise<void> {
-  const response = await fetch(`${getServerBaseUrl()}/api/skills/${id}`, {
+  const response = await serverFetch(`/api/skills/${id}`, {
     method: "DELETE",
     headers: authHeaders(accessToken),
   });
@@ -599,8 +580,7 @@ export async function fetchSkillFiles(
   accessToken: string,
   skillId: string,
 ): Promise<{ files: Array<{ id: string; filePath: string; content: string; mimeType: string; createdAt: string; updatedAt: string }> }> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/skills/${skillId}/files`,
+  const response = await serverFetch(`/api/skills/${skillId}/files`,
     { headers: authHeaders(accessToken) },
   );
   if (!response.ok) return handleErrorResponse(response);
@@ -612,8 +592,7 @@ export async function fetchSkillFiles(
 export async function fetchWorkspaceSkills(
   accessToken: string,
 ): Promise<WorkspaceSkillListResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/workspaces/skills`,
+  const response = await serverFetch(`/api/workspaces/skills`,
     { headers: authHeaders(accessToken) },
   );
   if (!response.ok) return handleErrorResponse(response);
@@ -624,8 +603,7 @@ export async function installSkill(
   accessToken: string,
   skillId: string,
 ): Promise<void> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/workspaces/skills`,
+  const response = await serverFetch(`/api/workspaces/skills`,
     {
       method: "POST",
       headers: authJsonHeaders(accessToken),
@@ -639,8 +617,7 @@ export async function uninstallSkill(
   accessToken: string,
   skillId: string,
 ): Promise<void> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/workspaces/skills/${skillId}`,
+  const response = await serverFetch(`/api/workspaces/skills/${skillId}`,
     {
       method: "DELETE",
       headers: authHeaders(accessToken),
@@ -654,8 +631,7 @@ export async function toggleSkill(
   skillId: string,
   enabled: boolean,
 ): Promise<void> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/workspaces/skills/${skillId}`,
+  const response = await serverFetch(`/api/workspaces/skills/${skillId}`,
     {
       method: "PATCH",
       headers: authJsonHeaders(accessToken),
@@ -678,8 +654,7 @@ export async function searchMarketplace(
     page: String(page),
     limit: String(limit),
   });
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/skills/marketplace/search?${params}`,
+  const response = await serverFetch(`/api/skills/marketplace/search?${params}`,
     { headers: authHeaders(accessToken) },
   );
   if (!response.ok) return handleErrorResponse(response);
@@ -691,8 +666,7 @@ export async function getMarketplaceDetail(
   packageName: string,
 ): Promise<MarketplaceDetail> {
   const params = new URLSearchParams({ name: packageName });
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/skills/marketplace/detail?${params}`,
+  const response = await serverFetch(`/api/skills/marketplace/detail?${params}`,
     { headers: authHeaders(accessToken) },
   );
   if (!response.ok) return handleErrorResponse(response);
@@ -703,8 +677,7 @@ export async function installMarketplaceSkill(
   accessToken: string,
   packageName: string,
 ): Promise<SkillDetailResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/skills/marketplace/install`,
+  const response = await serverFetch(`/api/skills/marketplace/install`,
     {
       method: "POST",
       headers: authJsonHeaders(accessToken),
@@ -719,8 +692,7 @@ export async function importSkillFromUrl(
   accessToken: string,
   url: string,
 ): Promise<SkillDetailResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/skills/import`,
+  const response = await serverFetch(`/api/skills/import`,
     {
       method: "POST",
       headers: authJsonHeaders(accessToken),

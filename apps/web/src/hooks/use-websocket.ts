@@ -8,7 +8,7 @@ import type {
   WsRpcRequest,
   RunCreateRequest,
 } from "@loomic/shared";
-import { getServerBaseUrl } from "../lib/env";
+import { getServerBaseUrl, isServerConfigured } from "../lib/env";
 
 type EventCallback = (event: StreamEvent) => void;
 type RPCHandler = (
@@ -77,6 +77,10 @@ export function useWebSocket(
       reconnectTimer.current = setTimeout(connect, 500);
       return;
     }
+
+    // No server means no socket to open. Building one from an empty base gives
+    // "ws:///api/ws", which throws on construction and then retries forever.
+    if (!isServerConfigured()) return;
 
     const serverBase = getServerBaseUrl();
     const wsUrl =

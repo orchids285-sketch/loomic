@@ -1,6 +1,6 @@
 import type { ImageArtifact, VideoArtifact } from "@loomic/shared";
 
-import { getServerBaseUrl } from "./env";
+import { getServerBaseUrl, isServerConfigured } from "./env";
 
 /** Video file extensions recognized for inline playback on canvas. */
 const VIDEO_EXTENSIONS = [".mp4", ".webm", ".ogg", ".mov"];
@@ -117,7 +117,11 @@ export function createExcalidrawImageElement(opts: {
  * Routes through the server proxy to bypass browser CORS restrictions.
  */
 export async function fetchAsDataURL(url: string): Promise<string> {
-  const proxyUrl = `${getServerBaseUrl()}/api/proxy-image?url=${encodeURIComponent(url)}`;
+  // Without a server there is no proxy; the direct URL may still load, and a relative
+  // "/api/proxy-image" would resolve against this static host and 404 every time.
+  const proxyUrl = isServerConfigured()
+    ? `${getServerBaseUrl()}/api/proxy-image?url=${encodeURIComponent(url)}`
+    : url;
 
   const response = await fetch(proxyUrl);
   if (!response.ok) {

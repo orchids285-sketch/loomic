@@ -6,7 +6,7 @@ import type {
   SubscriptionPlan,
 } from "@loomic/shared";
 
-import { getServerBaseUrl } from "./env";
+import { getServerBaseUrl, serverFetch } from "./env";
 import { ApiAuthError, ApiApplicationError } from "./server-api";
 
 // ── Helpers ──────────────────────────────────────────────────
@@ -37,7 +37,7 @@ async function handleErrorResponse(response: Response): Promise<never> {
 export async function fetchCredits(
   accessToken: string,
 ): Promise<CreditBalanceResponse> {
-  const response = await fetch(`${getServerBaseUrl()}/api/credits`, {
+  const response = await serverFetch(`/api/credits`, {
     headers: authHeaders(accessToken),
   });
   if (!response.ok) return handleErrorResponse(response);
@@ -48,8 +48,7 @@ export async function fetchCreditTransactions(
   accessToken: string,
   limit = 20,
 ): Promise<CreditTransactionsResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/credits/transactions?limit=${limit}`,
+  const response = await serverFetch(`/api/credits/transactions?limit=${limit}`,
     { headers: authHeaders(accessToken) },
   );
   if (!response.ok) return handleErrorResponse(response);
@@ -59,8 +58,7 @@ export async function fetchCreditTransactions(
 export async function claimDailyCredits(
   accessToken: string,
 ): Promise<ClaimDailyResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/credits/claim-daily`,
+  const response = await serverFetch(`/api/credits/claim-daily`,
     {
       method: "POST",
       headers: authHeaders(accessToken),
@@ -74,8 +72,7 @@ export async function adminSetPlan(
   accessToken: string,
   plan: SubscriptionPlan,
 ): Promise<CreditBalanceResponse> {
-  const response = await fetch(
-    `${getServerBaseUrl()}/api/credits/admin/set-plan`,
+  const response = await serverFetch(`/api/credits/admin/set-plan`,
     {
       method: "POST",
       headers: authJsonHeaders(accessToken),

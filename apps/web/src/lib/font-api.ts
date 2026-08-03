@@ -1,4 +1,4 @@
-import { getServerBaseUrl } from "./env";
+import { getServerBaseUrl, isServerConfigured, ServerNotConfiguredError } from "./env";
 
 export type GoogleFontItem = {
   family: string;
@@ -14,6 +14,7 @@ export async function fetchGoogleFonts(
   if (search) params.set("search", search);
   if (category) params.set("category", category);
 
+  if (!isServerConfigured()) throw new ServerNotConfiguredError();
   const url = `${getServerBaseUrl()}/api/fonts?${params}`;
   const res = await fetch(url);
   if (!res.ok) return [];

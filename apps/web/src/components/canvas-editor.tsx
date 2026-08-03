@@ -7,7 +7,7 @@ import { useTheme } from "next-themes";
 import { useCallback, useEffect, useMemo, useRef, useState, memo } from "react";
 
 import type { WebSocketHandle } from "../hooks/use-websocket";
-import { getServerBaseUrl } from "../lib/env";
+import { getServerBaseUrl, isServerConfigured } from "../lib/env";
 import { saveCanvas, uploadThumbnail } from "../lib/server-api";
 import { VideoCanvasElement } from "./canvas/video-canvas-element";
 import { isVideoUrl } from "../lib/canvas-elements";
@@ -493,6 +493,7 @@ export function CanvasEditor({
       // keepalive requests are limited to 64 KiB total in-flight per page; for
       // canvases with very large embedded files this may exceed the limit, but
       // it's the best-effort approach -- sendBeacon has the same constraint.
+      if (!isServerConfigured()) return;   // nowhere to save to
       const url = `${getServerBaseUrl()}/api/canvases/${canvasIdRef.current}`;
       try {
         fetch(url, {
