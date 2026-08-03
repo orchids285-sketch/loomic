@@ -82,7 +82,7 @@ export function ChatSkills({ onSend }: ChatSkillsProps) {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-5 px-4">
       <p className="text-sm font-semibold text-foreground">
-        Try these Loomic Skills
+        Try these skills
       </p>
       <div className="flex max-w-[320px] flex-wrap justify-center gap-2">
         {PRESET_SKILLS.map((skill) => (

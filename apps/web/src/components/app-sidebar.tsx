@@ -4,8 +4,6 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-import { LoomicLogo } from "@/components/icons/loomic-logo";
-import { CreditBalance } from "@/components/credits/credit-balance";
 import { useAuth } from "@/lib/auth-context";
 import { cn } from "@/lib/utils";
 
@@ -196,21 +194,6 @@ export function AppSidebar() {
     <>
       {/* Desktop sidebar rail -- hidden below md */}
       <aside className="hidden md:flex h-screen w-[60px] flex-col items-center border-r border-border bg-card py-3 gap-1">
-        {/* Logo */}
-        <Link
-          href="/home"
-          title="Loomic"
-          className="mb-1 flex h-9 w-9 items-center justify-center"
-        >
-          <motion.div
-            whileHover={{ scale: 1.1, rotate: 8 }}
-            whileTap={{ scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
-          >
-            <LoomicLogo className="size-7 text-foreground" />
-          </motion.div>
-        </Link>
-
         {/* Top nav items */}
         {TOP_NAV_ITEMS.map((item) => (
           <NavButton
@@ -224,7 +207,6 @@ export function AppSidebar() {
         <div className="flex-1" />
 
         {/* Credits balance */}
-        <CreditBalance />
 
         {/* Settings / Profile */}
         <NavButton

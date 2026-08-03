@@ -2,28 +2,29 @@
 
 import { useCallback } from "react";
 
-import { useTierLimitToast } from "@/components/credits/tier-limit-toast";
 import { ApiApplicationError } from "@/lib/server-api";
 import { useToast } from "@/components/toast";
 
-const TIER_LIMIT_CODES = new Set([
+// The plan-limit codes are still reported by the server, but they no longer have a
+// dedicated toast: with no plans in this build there is no upgrade to point at, so they
+// are ordinary failures and say what went wrong in the same place as the others.
+const SERVER_LIMIT_CODES = new Set([
   "concurrency_limit",
   "model_not_accessible",
   "resolution_not_allowed",
+  "insufficient_credits",
 ]);
 
 /**
  * Returns a handler function that inspects generation errors and routes them
  * to the appropriate UI:
- * - `insufficient_credits` -> returns "insufficient_credits" so caller can open CreditInsufficientDialog
- * - tier limit codes -> shows tier-limit toast (handled internally)
- * - other errors -> shows generic error toast
+ * - server limit codes -> shows the server's own message
+ * - other errors -> shows a generic error toast
  *
  * @returns handleGenerationError(error) => boolean — true if the error was a
  *          known tier/credit limit (i.e. caller should NOT show its own error UI)
  */
 export function useGenerationErrorHandler() {
-  const { showTierLimit } = useTierLimitToast();
   const { error: showErrorToast } = useToast();
 
   const handleGenerationError = useCallback(
@@ -35,14 +36,8 @@ export function useGenerationErrorHandler() {
         return false;
       }
 
-      // Credit-insufficient: caller should open CreditInsufficientDialog
-      if (error.code === "insufficient_credits") {
-        return true;
-      }
-
-      // Tier limit errors: show toast notification
-      if (TIER_LIMIT_CODES.has(error.code)) {
-        showTierLimit({ code: error.code, message: error.message });
+      if (SERVER_LIMIT_CODES.has(error.code)) {
+        showErrorToast(error.message || "The server refused this request.");
         return true;
       }
 
@@ -51,7 +46,7 @@ export function useGenerationErrorHandler() {
       showErrorToast("Generation failed. Please try again.");
       return false;
     },
-    [showTierLimit, showErrorToast],
+    [showErrorToast],
   );
 
   return { handleGenerationError };

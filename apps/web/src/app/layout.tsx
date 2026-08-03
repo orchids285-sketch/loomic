@@ -10,24 +10,12 @@ import "./globals.css";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
+// No marks and no icon paths. The logo, favicon, apple-touch-icon and OG image were
+// deleted with the rest of the branding, so declaring them here would be three 404s on
+// every page load -- and an OG card is for sharing a public page, which this is not.
 export const metadata: Metadata = {
-  title: "Loomic",
-  description: "AI-powered creative workspace",
-  icons: {
-    icon: "/favicon.svg",
-    apple: "/apple-touch-icon.png",
-  },
-  openGraph: {
-    title: "Loomic",
-    description: "AI-powered creative workspace",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Loomic",
-    description: "AI-powered creative workspace",
-    images: ["/og-image.png"],
-  },
+  title: "Images",
+  description: "Design on an infinite canvas.",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

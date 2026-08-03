@@ -10,7 +10,6 @@ import {
 import type { ImageGenerationPreference, VideoGenerationPreference } from "@loomic/shared";
 
 import type { ImageAttachmentState, ReadyAttachment } from "../hooks/use-image-attachments";
-import type { HomeExampleSelection } from "@/lib/home-example-seeds";
 import { AgentModelSelector } from "./agent-model-selector";
 import { ImageAttachmentBar } from "./image-attachment-bar";
 import { ImageModelPreferencePopover } from "./image-model-preference";
@@ -37,8 +36,6 @@ type HomePromptProps = {
   onRemoveAttachment?: (id: string) => void;
   isUploading?: boolean;
   readyAttachments?: ReadyAttachment[];
-  selectedSeed?: HomeExampleSelection | null;
-  onClearSelectedSeed?: () => void;
 };
 
 const toolbarButtons = [
@@ -69,8 +66,6 @@ export const HomePrompt = forwardRef<HomePromptHandle, HomePromptProps>(
       onRemoveAttachment,
       isUploading,
       readyAttachments,
-      selectedSeed,
-      onClearSelectedSeed,
     },
     ref,
   ) {
@@ -104,34 +99,18 @@ export const HomePrompt = forwardRef<HomePromptHandle, HomePromptProps>(
     const handleSubmit = useCallback(() => {
       const trimmed = value.trim();
       if (
-        (!trimmed && (!attachments || attachments.length === 0) && !selectedSeed) ||
+        (!trimmed && (!attachments || attachments.length === 0)) ||
         disabled ||
         isUploading
       )
         return;
 
-      // Merge user-uploaded attachments with example seed images
-      let mergedAttachments: ReadyAttachment[] | undefined =
+      // Only what the user actually attached. The example seeds that used to be merged
+      // in here came from the template gallery, which is gone.
+      const mergedAttachments: ReadyAttachment[] | undefined =
         readyAttachments && readyAttachments.length > 0
           ? [...readyAttachments]
           : undefined;
-
-      const seedImageMentions =
-        selectedSeed?.inputMentions?.filter((m) => m.type === "image") ?? [];
-      if (seedImageMentions.length > 0) {
-        const seedAttachments: ReadyAttachment[] = seedImageMentions.map(
-          (mention, i) => ({
-            assetId: `seed-${selectedSeed!.categoryKey}-${i}`,
-            url: mention.imgSrc,
-            mimeType: "image/webp",
-            source: "upload" as const,
-            name: mention.name,
-          }),
-        );
-        mergedAttachments = mergedAttachments
-          ? [...mergedAttachments, ...seedAttachments]
-          : seedAttachments;
-      }
 
       onSubmit(
         trimmed,
@@ -148,7 +127,7 @@ export const HomePrompt = forwardRef<HomePromptHandle, HomePromptProps>(
       if (textareaRef.current) {
         textareaRef.current.style.height = "auto";
       }
-    }, [value, disabled, isUploading, onSubmit, attachments, readyAttachments, preference, videoPreference, agentModel, selectedSeed]);
+    }, [value, disabled, isUploading, onSubmit, attachments, readyAttachments, preference, videoPreference, agentModel]);
 
     const handleKeyDown = useCallback(
       (e: React.KeyboardEvent) => {
@@ -191,47 +170,6 @@ export const HomePrompt = forwardRef<HomePromptHandle, HomePromptProps>(
             onRemove={onRemoveAttachment}
           />
         )}
-        {selectedSeed ? (
-          <div className="flex flex-col gap-3 border-b border-border/80 px-4 py-3">
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <div className="inline-flex items-center rounded-full border border-border bg-background px-2 py-1 text-[11px] font-medium text-muted-foreground">
-                  {selectedSeed.categoryLabel}
-                </div>
-                <p className="mt-2 text-sm font-medium text-foreground">
-                  {selectedSeed.title}
-                </p>
-              </div>
-
-              {onClearSelectedSeed ? (
-                <button
-                  type="button"
-                  onClick={onClearSelectedSeed}
-                  className="shrink-0 rounded-full border border-border bg-background px-2 py-1 text-[11px] text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Clear
-                </button>
-              ) : null}
-            </div>
-
-            <div className="flex items-center gap-2 overflow-x-auto pb-0.5">
-              {selectedSeed.inputMentions
-                .filter((mention) => mention.type === "image")
-                .map((mention) => (
-                  <div
-                    key={`${selectedSeed.title}-${mention.imgSrc}`}
-                    className="h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-border bg-background"
-                  >
-                    <img
-                      src={mention.imgSrc}
-                      alt={mention.name}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                ))}
-            </div>
-          </div>
-        ) : null}
         <textarea
           ref={textareaRef}
           value={value}
@@ -239,7 +177,7 @@ export const HomePrompt = forwardRef<HomePromptHandle, HomePromptProps>(
           onKeyDown={handleKeyDown}
           onPaste={handlePaste}
           onInput={handleInput}
-          placeholder="Ask Loomic to design something..."
+          placeholder="Describe what you want to design..."
           disabled={disabled}
           rows={2}
           className="w-full resize-none bg-transparent px-3 pt-3 pb-2 text-sm leading-relaxed text-foreground placeholder:text-muted-foreground focus:outline-none disabled:opacity-50 sm:px-4 sm:pt-4"

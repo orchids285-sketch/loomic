@@ -4,8 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { AgentSection } from "@/components/agent-section";
-import { BillingSection } from "@/components/billing-section";
-import { CreditUsageHistory } from "@/components/credits/credit-usage-history";
 import { ProfileSection } from "@/components/profile-section";
 import { SettingsSkeleton } from "@/components/skeletons/settings-skeleton";
 import { useAuth } from "@/lib/auth-context";
@@ -18,13 +16,13 @@ import {
   updateWorkspaceSettings,
 } from "@/lib/server-api";
 
-type SettingsTab = "profile" | "agent" | "billing" | "usage";
+// Billing and Usage are gone with the account system: there is no plan to manage
+// and no credits to spend, so a tab for each would be two empty rooms.
+type SettingsTab = "profile" | "agent";
 
 const tabs: Array<{ id: SettingsTab; label: string }> = [
   { id: "profile", label: "Profile" },
   { id: "agent", label: "Agent" },
-  { id: "billing", label: "Billing" },
-  { id: "usage", label: "Usage" },
 ];
 
 export default function SettingsPage() {
@@ -148,16 +146,12 @@ export default function SettingsPage() {
             email={profile.email}
             onSave={handleProfileSave}
           />
-        ) : activeTab === "agent" ? (
+        ) : (
           <AgentSection
             defaultModel={defaultModel}
             onSave={handleAgentSave}
             fetchModels={stableFetchModels}
           />
-        ) : activeTab === "usage" ? (
-          <CreditUsageHistory />
-        ) : (
-          <BillingSection />
         )}
       </div>
     </div>

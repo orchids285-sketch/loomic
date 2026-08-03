@@ -8,27 +8,14 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Trash2 } from "lucide-react";
-import { HomeDiscoveryGallery } from "@/components/home-discovery-gallery";
 import { DeleteProjectDialog } from "@/components/delete-project-dialog";
-import { HomeExampleBrowser } from "@/components/home-example-browser";
 import { HomePrompt, type HomePromptHandle } from "@/components/home-prompt";
 import { LoadingScreen } from "@/components/loading-screen";
-import { LoomicLogo } from "@/components/icons/loomic-logo";
 import { HomeProjectsSkeleton } from "@/components/skeletons/home-skeleton";
 import { useCreateProject } from "@/hooks/use-create-project";
 import { useDeleteProject } from "@/hooks/use-delete-project";
 import { useImageAttachments } from "@/hooks/use-image-attachments";
 import { useAuth } from "@/lib/auth-context";
-import { loadHomeDiscoveryCategories } from "@/lib/home-discovery-library";
-import {
-  homeDiscoverySeedCategories,
-  type HomeDiscoverySelection,
-} from "@/lib/home-discovery-seeds";
-import { loadHomeExampleCategories } from "@/lib/home-example-library";
-import {
-  homeExampleSeedCategories,
-  type HomeExampleSelection,
-} from "@/lib/home-example-seeds";
 import { ApiAuthError, fetchProjects } from "@/lib/server-api";
 import { formatDate } from "@/lib/utils";
 
@@ -77,14 +64,6 @@ export default function HomePage() {
     useDeleteProject({ onDeleted: handleDeleted });
   const [projects, setProjects] = useState<ProjectSummary[]>([]);
   const [projectsLoading, setProjectsLoading] = useState(true);
-  const [homeDiscoveryCategories, setHomeDiscoveryCategories] = useState(
-    homeDiscoverySeedCategories,
-  );
-  const [homeExampleCategories, setHomeExampleCategories] = useState(
-    homeExampleSeedCategories,
-  );
-  const [selectedExample, setSelectedExample] =
-    useState<HomeExampleSelection | null>(null);
 
   const promptRef = useRef<HomePromptHandle>(null);
 
@@ -139,33 +118,6 @@ export default function HomePage() {
     loadProjects();
   }, [loadProjects]);
 
-  useEffect(() => {
-    if (!session) {
-      return;
-    }
-
-    let cancelled = false;
-
-    void Promise.all([
-      loadHomeExampleCategories(),
-      loadHomeDiscoveryCategories(),
-    ])
-      .then(([exampleCategories, discoveryCategories]) => {
-        if (cancelled) {
-          return;
-        }
-
-        setHomeExampleCategories(exampleCategories);
-        setHomeDiscoveryCategories(discoveryCategories);
-      })
-      .catch((error) => {
-        console.warn("[home] failed to load home page seed content", error);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [session]);
 
   // -----------------------------------------------------------------------
   // Prompt submit → create project → navigate to canvas
@@ -178,7 +130,6 @@ export default function HomePage() {
       videoGenerationPreference?: VideoGenerationPreference,
       model?: string,
     ) => {
-      setSelectedExample(null);
       clearAttachments();
       createNewProject({
         prompt,
@@ -195,21 +146,8 @@ export default function HomePage() {
     [createNewProject, clearAttachments],
   );
 
-  const handleExampleSelect = useCallback((selection: HomeExampleSelection) => {
-    setSelectedExample(selection);
-    promptRef.current?.fill(selection.prompt);
-  }, []);
 
-  const handleExampleClear = useCallback(() => {
-    setSelectedExample(null);
-  }, []);
 
-  const handleDiscoverySelect = useCallback(
-    (selection: HomeDiscoverySelection) => {
-      createNewProject({ prompt: selection.prompt });
-    },
-    [createNewProject],
-  );
 
   // -----------------------------------------------------------------------
   // Render
@@ -226,18 +164,6 @@ export default function HomePage() {
         animate="visible"
         className="flex w-full max-w-3xl flex-col items-center text-center"
       >
-        {/* Logo + brand name */}
-        <motion.div
-          variants={fadeUp}
-          custom={0}
-          className="mb-3 flex items-center gap-2 md:mb-4"
-        >
-          <LoomicLogo className="size-7 text-foreground md:size-8" />
-          <span className="text-lg font-semibold text-foreground md:text-xl">
-            Loomic
-          </span>
-        </motion.div>
-
         <motion.h1
           variants={fadeUp}
           custom={1}
@@ -264,18 +190,9 @@ export default function HomePage() {
             onRemoveAttachment={removeAttachment}
             isUploading={isUploading}
             readyAttachments={readyAttachments}
-            selectedSeed={selectedExample}
-            onClearSelectedSeed={handleExampleClear}
           />
         </motion.div>
 
-        <motion.div variants={fadeUp} custom={4} className="w-full">
-          <HomeExampleBrowser
-            categories={homeExampleCategories}
-            selectedExample={selectedExample}
-            onExampleSelect={handleExampleSelect}
-          />
-        </motion.div>
       </motion.div>
 
       {/* Recent projects */}
@@ -402,10 +319,6 @@ export default function HomePage() {
         )}
       </div>
 
-      <HomeDiscoveryGallery
-        categories={homeDiscoveryCategories}
-        onCaseSelect={handleDiscoverySelect}
-      />
 
       {/* Delete confirmation dialog */}
       <DeleteProjectDialog
