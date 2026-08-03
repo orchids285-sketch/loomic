@@ -17,7 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default function ProjectsPage() {
-  const { session, signOut } = useAuth();
+  const { session } = useAuth();
   const router = useRouter();
   const { create: createNewProject, creating } = useCreateProject();
 
@@ -30,8 +30,6 @@ export default function ProjectsPage() {
   // Ref pattern: prevent token refresh from cascading through dependency arrays
   const accessTokenRef = useRef(session?.access_token);
   accessTokenRef.current = session?.access_token;
-  const signOutRef = useRef(signOut);
-  signOutRef.current = signOut;
   const routerRef = useRef(router);
   routerRef.current = router;
   const hasInitialized = useRef(false);
@@ -53,8 +51,8 @@ export default function ProjectsPage() {
       setProjects(data.projects);
     } catch (err) {
       if (err instanceof ApiAuthError) {
-        await signOutRef.current();
-        /* no sign-in screen in this build -- staying put beats bouncing to a 404 */
+        // A 401 has nowhere to send anyone in a build with no sign-in, so it is
+        // reported like any other failure instead of quietly dropping the session.
         return;
       }
       setLoadError("Failed to load data. Please try again.");

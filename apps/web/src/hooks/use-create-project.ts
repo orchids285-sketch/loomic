@@ -24,13 +24,11 @@ export const INITIAL_AGENT_MODEL_KEY = "loomic:initial-agent-model";
  * Used by Home page, Projects page, and Canvas logo menu.
  */
 export function useCreateProject() {
-  const { session, signOut } = useAuth();
+  const { session } = useAuth();
   const router = useRouter();
   const { error: toastError } = useToast();
   const [creating, setCreating] = useState(false);
 
-  const signOutRef = useRef(signOut);
-  signOutRef.current = signOut;
   const routerRef = useRef(router);
   routerRef.current = router;
 
@@ -59,7 +57,7 @@ export function useCreateProject() {
 
       const token = session?.access_token;
       if (!token) {
-        toastError("You need to be signed in to create a project.");
+        toastError("No workspace session -- reload the tool to get a new one.");
         return;
       }
 
@@ -140,7 +138,8 @@ export function useCreateProject() {
         // Close the blank tab on failure
         newTab?.close();
         if (err instanceof ApiAuthError) {
-          await signOutRef.current();
+        // A 401 has nowhere to send anyone in a build with no sign-in, so it is
+        // reported like any other failure instead of quietly dropping the session.
           /* no sign-in screen in this build -- staying put beats bouncing to a 404 */
           return;
         }

@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-import { useAuth } from "@/lib/auth-context";
 import { cn } from "@/lib/utils";
 
 // ---------------------------------------------------------------------------
@@ -180,15 +179,10 @@ function MobileBottomBar() {
 export function AppSidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { signOut } = useAuth();
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
 
-  const handleSignOut = async () => {
-    await signOut();
-    /* no sign-in screen in this build -- staying put beats bouncing to a 404 */
-  };
 
   return (
     <>
@@ -213,27 +207,6 @@ export function AppSidebar() {
           item={SETTINGS_ITEM}
           active={isActive(SETTINGS_ITEM.href)}
         />
-
-        {/* Sign out */}
-        <button
-          type="button"
-          onClick={handleSignOut}
-          title="Sign out"
-          aria-label="Sign out"
-          className="flex h-11 w-11 items-center justify-center rounded-full md:h-9 md:w-9"
-        >
-          <motion.svg
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-muted-foreground"
-            whileHover={{ scale: 1.15 }}
-            whileTap={{ scale: 0.9 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
-          >
-            <path d="M3 4.5A2.5 2.5 0 0 1 5.5 2h5A2.5 2.5 0 0 1 13 4.5v1a.5.5 0 0 1-1 0v-1A1.5 1.5 0 0 0 10.5 3h-5A1.5 1.5 0 0 0 4 4.5v11A1.5 1.5 0 0 0 5.5 17h5a1.5 1.5 0 0 0 1.5-1.5v-1a.5.5 0 0 1 1 0v1A2.5 2.5 0 0 1 10.5 18h-5A2.5 2.5 0 0 1 3 15.5zm12.354-1.354a.5.5 0 0 0-.708.708L16.793 6H7.5a.5.5 0 0 0 0 1h9.293l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708z" transform="translate(0, 4)" />
-          </motion.svg>
-        </button>
       </aside>
 
       {/* Mobile bottom navigation bar */}

@@ -12,13 +12,11 @@ import { ApiAuthError, deleteProject } from "@/lib/server-api";
 export function useDeleteProject(opts?: {
   onDeleted?: (projectId: string) => void;
 }) {
-  const { session, signOut } = useAuth();
+  const { session } = useAuth();
   const { success: toastSuccess, error: toastError } = useToast();
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
 
-  const signOutRef = useRef(signOut);
-  signOutRef.current = signOut;
 
   /** Step 1: open confirm dialog */
   const requestDelete = useCallback((projectId: string) => {
@@ -37,7 +35,8 @@ export function useDeleteProject(opts?: {
       opts?.onDeleted?.(pendingId);
     } catch (err) {
       if (err instanceof ApiAuthError) {
-        await signOutRef.current();
+        // A 401 has nowhere to send anyone in a build with no sign-in, so it is
+        // reported like any other failure instead of quietly dropping the session.
         return;
       }
       toastError("Could not delete the project");

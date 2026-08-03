@@ -27,7 +27,7 @@ import { BrandKitSidebar } from "./brand-kit-sidebar";
 import { EmptyState } from "./empty-state";
 
 export function BrandKitPage() {
-  const { session, signOut } = useAuth();
+  const { session } = useAuth();
 
   const [kits, setKits] = useState<BrandKitSummary[]>([]);
   const [selectedKit, setSelectedKit] = useState<BrandKitDetail | null>(null);
@@ -39,12 +39,11 @@ export function BrandKitPage() {
   accessTokenRef.current = session?.access_token;
   const selectedKitRef = useRef(selectedKit);
   selectedKitRef.current = selectedKit;
-  const signOutRef = useRef(signOut);
-  signOutRef.current = signOut;
 
   const handleAuthError = useCallback(async (err: unknown) => {
     if (err instanceof ApiAuthError) {
-      await signOutRef.current();
+        // A 401 has nowhere to send anyone in a build with no sign-in, so it is
+        // reported like any other failure instead of quietly dropping the session.
       return true;
     }
     return false;

@@ -1,42 +1,28 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
 
 import { AgentSection } from "@/components/agent-section";
-import { ProfileSection } from "@/components/profile-section";
 import { SettingsSkeleton } from "@/components/skeletons/settings-skeleton";
 import { useAuth } from "@/lib/auth-context";
 import {
   ApiAuthError,
   fetchModels,
-  fetchViewer,
   fetchWorkspaceSettings,
-  updateProfile,
   updateWorkspaceSettings,
 } from "@/lib/server-api";
 
-// Billing and Usage are gone with the account system: there is no plan to manage
-// and no credits to spend, so a tab for each would be two empty rooms.
-type SettingsTab = "profile" | "agent";
-
-const tabs: Array<{ id: SettingsTab; label: string }> = [
-  { id: "profile", label: "Profile" },
-  { id: "agent", label: "Agent" },
-];
-
+/**
+ * One section, so no tabs.
+ *
+ * Profile went with the account system -- a display name and an email address are an
+ * account, and there is no account here to name. Billing and Usage went with it. What is
+ * left is the agent's default model, which is a setting about the work rather than about
+ * a person, and a tab bar with one tab in it is furniture pretending to be navigation.
+ */
 export default function SettingsPage() {
   const { session } = useAuth();
-  const searchParams = useSearchParams();
 
-  const initialTab = (searchParams.get("tab") as SettingsTab) ?? "profile";
-  const [activeTab, setActiveTab] = useState<SettingsTab>(
-    tabs.some((t) => t.id === initialTab) ? initialTab : "profile",
-  );
-  const [profile, setProfile] = useState<{
-    displayName: string;
-    email: string;
-  } | null>(null);
   const [defaultModel, setDefaultModel] = useState<string>("gpt-5.4-mini");
   const [pageLoading, setPageLoading] = useState(true);
 
@@ -53,21 +39,10 @@ export default function SettingsPage() {
     setPageLoading(true);
 
     try {
-      const [viewer, settings] = await Promise.all([
-        fetchViewer(token),
-        fetchWorkspaceSettings(token),
-      ]);
-
-      setProfile({
-        displayName: viewer.profile.displayName,
-        email: viewer.profile.email,
-      });
+      const settings = await fetchWorkspaceSettings(token);
       setDefaultModel(settings.settings.defaultModel);
     } catch (err) {
-      if (err instanceof ApiAuthError) {
-        // Workspace layout handles auth redirect
-        return;
-      }
+      if (err instanceof ApiAuthError) return;
     } finally {
       setPageLoading(false);
     }
@@ -79,19 +54,6 @@ export default function SettingsPage() {
     hasInitialized.current = true;
     loadData();
   }, [session?.access_token, loadData]);
-
-  const handleProfileSave = useCallback(
-    async (displayName: string) => {
-      const token = getToken();
-      if (!token) return;
-      const result = await updateProfile(token, { displayName });
-      setProfile({
-        displayName: result.profile.displayName,
-        email: result.profile.email,
-      });
-    },
-    [getToken],
-  );
 
   const handleAgentSave = useCallback(
     async (model: string) => {
@@ -111,48 +73,18 @@ export default function SettingsPage() {
     return <SettingsSkeleton />;
   }
 
-  if (!profile) return null;
-
   return (
     <div className="px-4 py-6 sm:px-6 md:p-8">
       <h1 className="mb-4 text-base font-semibold sm:mb-6 sm:text-lg">
         Settings
       </h1>
 
-      {/* Tab bar -- scrollable on small screens, 44px min touch target */}
-      <div className="mb-6 overflow-x-auto sm:mb-8">
-        <div className="inline-flex gap-1 rounded-lg bg-muted p-1">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setActiveTab(tab.id)}
-              className={`min-h-[44px] whitespace-nowrap rounded-md px-4 py-1.5 text-sm transition-colors sm:min-h-0 sm:px-3 ${
-                activeTab === tab.id
-                  ? "bg-card font-medium text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
       <div className="max-w-xl">
-        {activeTab === "profile" ? (
-          <ProfileSection
-            displayName={profile.displayName}
-            email={profile.email}
-            onSave={handleProfileSave}
-          />
-        ) : (
-          <AgentSection
-            defaultModel={defaultModel}
-            onSave={handleAgentSave}
-            fetchModels={stableFetchModels}
-          />
-        )}
+        <AgentSection
+          defaultModel={defaultModel}
+          onSave={handleAgentSave}
+          fetchModels={stableFetchModels}
+        />
       </div>
     </div>
   );

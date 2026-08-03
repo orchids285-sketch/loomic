@@ -53,7 +53,7 @@ const cardItem = {
 // Home Page
 // ---------------------------------------------------------------------------
 export default function HomePage() {
-  const { session, signOut } = useAuth();
+  const { session } = useAuth();
   const router = useRouter();
 
   const { create: createNewProject, creating } = useCreateProject();
@@ -81,8 +81,6 @@ export default function HomePage() {
     isUploading,
     readyAttachments,
   } = useImageAttachments(session?.access_token ?? "");
-  const signOutRef = useRef(signOut);
-  signOutRef.current = signOut;
   const routerRef = useRef(router);
   routerRef.current = router;
   const hasInitialized = useRef(false);
@@ -101,8 +99,8 @@ export default function HomePage() {
       setProjects(data.projects.slice(0, RECENT_PROJECTS_LIMIT));
     } catch (err) {
       if (err instanceof ApiAuthError) {
-        await signOutRef.current();
-        /* no sign-in screen in this build -- staying put beats bouncing to a 404 */
+        // A 401 has nowhere to send anyone in a build with no sign-in, so it is
+        // reported like any other failure instead of quietly dropping the session.
         return;
       }
       // Silently fail — the section just stays empty.
