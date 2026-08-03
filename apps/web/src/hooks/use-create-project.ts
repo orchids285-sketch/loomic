@@ -6,6 +6,8 @@ import type { ImageGenerationPreference, VideoGenerationPreference } from "@loom
 
 import type { ReadyAttachment } from "@/hooks/use-image-attachments";
 import { useAuth } from "@/lib/auth-context";
+import { isServerConfigured } from "@/lib/env";
+import { isSupabaseConfigured } from "@/lib/supabase-browser";
 import { useToast } from "@/components/toast";
 import { ApiAuthError, createProject } from "@/lib/server-api";
 
@@ -40,8 +42,26 @@ export function useCreateProject() {
       videoGenerationPreference?: VideoGenerationPreference;
       model?: string;
     }) => {
+      if (creating) return;
+
+      // This used to be `if (!token || creating) return` -- a silent no-op. With no
+      // backend there is no session, so pressing Send did nothing at all and said
+      // nothing at all, which reads as a broken button rather than a missing service.
+      // Both causes are named separately because they need different fixes.
+      if (!isSupabaseConfigured()) {
+        toastError("This deployment has no workspace database yet, so projects cannot be created.");
+        return;
+      }
+      if (!isServerConfigured()) {
+        toastError("This deployment has no agent server yet, so projects cannot be created.");
+        return;
+      }
+
       const token = session?.access_token;
-      if (!token || creating) return;
+      if (!token) {
+        toastError("You need to be signed in to create a project.");
+        return;
+      }
 
       // Persist attachments in sessionStorage BEFORE window.open so the
       // new tab's cloned sessionStorage already contains them.
