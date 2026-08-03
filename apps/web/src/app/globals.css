@@ -346,6 +346,38 @@
   font-weight: 600;
 }
 
+/* ── Excalidraw surfaces ──────────────────────────────────────────────────────────
+ * Excalidraw paints its own islands, popovers and context menus from its own custom
+ * properties, so the app theme does not reach them: without this the panels that are
+ * still visible arrive in Excalidraw's grey while everything around them is #191815.
+ *
+ * Both the older names (--island-bg-color) and the newer --color-surface-* scale are set,
+ * because which one applies depends on the version and an unknown custom property is
+ * simply ignored -- so covering both costs nothing and surviving an upgrade is worth it.
+ */
+.excalidraw.theme--dark,
+.excalidraw {
+  --island-bg-color: #211f1b;
+  --default-bg-color: #191815;
+  --popup-bg-color: #211f1b;
+  --sidebar-bg-color: #1e1c19;
+  --input-bg-color: #2a2823;
+  --input-border-color: #32302a;
+  --default-border-color: #32302a;
+  --text-primary-color: #edebe6;
+  --color-surface-low: #211f1b;
+  --color-surface-mid: #1e1c19;
+  --color-surface-high: #2a2823;
+  --color-surface-lowest: #191815;
+  --color-surface-primary-container: #2a2823;
+  --color-on-surface: #edebe6;
+  --button-gray-1: #2a2823;
+  --button-gray-2: #32302a;
+  --button-gray-3: #3d3a33;
+  --island-overlay-bg-color: #211f1b;
+  --dialog-border-color: #32302a;
+}
+
 /* ── Excalidraw UI overrides (aligned with Jaaz) ── */
 
 /* Hide left menu button — replaced by CanvasLogoMenu */
