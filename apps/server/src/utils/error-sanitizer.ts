@@ -40,25 +40,25 @@ export function sanitizeErrorForClient(error: unknown): string {
 
   // Map to user-friendly messages
   if (PROVIDER_PATTERN.test(raw)) {
-    return "AI 服务暂时不可用，请稍后重试。";
+    return "The AI service is unavailable right now. Please try again shortly.";
   }
   if (DB_PATTERN.test(raw)) {
-    return "数据服务异常，请稍后重试。";
+    return "The data service is having trouble. Please try again shortly.";
   }
   if (AUTH_PATTERN.test(raw)) {
-    return "认证失败，请刷新页面重新登录。";
+    return "Authentication failed. Refresh the page to continue.";
   }
   if (INFRA_PATTERN.test(raw)) {
-    return "网络连接异常，请检查网络后重试。";
+    return "Network problem. Check your connection and try again.";
   }
   if (raw.includes("abort") || raw.includes("cancel")) {
-    return "请求已取消。";
+    return "Request cancelled.";
   }
   if (raw.length > 100) {
     // Long messages are likely stack traces or JSON errors
-    return "请求处理失败，请重试。";
+    return "The request failed. Please try again.";
   }
 
   // Short, non-technical messages can pass through
-  return "请求处理失败，请重试。";
+  return "The request failed. Please try again.";
 }

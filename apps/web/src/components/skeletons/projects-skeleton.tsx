@@ -11,7 +11,7 @@ export function ProjectsSkeleton() {
 
       {/* Card grid -- matches responsive breakpoints of ProjectList */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {/* "+ 新建项目" placeholder */}
+        {/* "+ New project" placeholder */}
         <div className="aspect-[286/208] rounded-xl border-2 border-dashed border-border flex flex-col items-center justify-center gap-2">
           <span className="text-2xl text-border">+</span>
           <Skeleton className="h-3 w-12 sm:h-4 sm:w-14" />

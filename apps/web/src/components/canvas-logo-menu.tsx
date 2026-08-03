@@ -115,7 +115,7 @@ export function CanvasLogoMenu({
       router.push("/projects");
     } catch (err) {
       console.warn("Failed to delete project:", err);
-      toastError("项目删除失败");
+      toastError("Could not delete the project");
     } finally {
       setConfirmingDelete(false);
     }
@@ -180,7 +180,7 @@ export function CanvasLogoMenu({
       >
         <DropdownMenuTrigger
           className="flex items-center justify-center size-8 rounded-xl bg-card/80 backdrop-blur-sm shadow-sm border border-border hover:bg-card transition-colors cursor-pointer outline-none"
-          aria-label="菜单"
+          aria-label="Menu"
         >
           <LoomicLogo className="size-5 text-foreground" />
         </DropdownMenuTrigger>
@@ -190,11 +190,11 @@ export function CanvasLogoMenu({
           <DropdownMenuGroup>
             <DropdownMenuItem onClick={() => router.push("/home")}>
               <Home className="size-4" />
-              主页
+              Home
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => router.push("/projects")}>
               <FolderOpen className="size-4" />
-              项目库
+              Projects
             </DropdownMenuItem>
           </DropdownMenuGroup>
 
@@ -204,14 +204,14 @@ export function CanvasLogoMenu({
           <DropdownMenuGroup>
             <DropdownMenuItem onClick={() => createNewProject()}>
               <Plus className="size-4" />
-              新建项目
+              New project
             </DropdownMenuItem>
             <DropdownMenuItem
               variant="destructive"
               onClick={handleDeleteProject}
             >
               <Trash2 className="size-4" />
-              {confirmingDelete ? "确认删除?" : "删除当前项目"}
+              {confirmingDelete ? "Confirm deletion?" : "Delete this project"}
             </DropdownMenuItem>
           </DropdownMenuGroup>
 
@@ -221,7 +221,7 @@ export function CanvasLogoMenu({
           <DropdownMenuGroup>
             <DropdownMenuItem onClick={() => fileInputRef.current?.click()}>
               <ImagePlus className="size-4" />
-              导入图片
+              Import image
             </DropdownMenuItem>
           </DropdownMenuGroup>
 
@@ -233,7 +233,7 @@ export function CanvasLogoMenu({
               onClick={() => dispatchKeyToExcalidraw("z", { metaKey: true })}
             >
               <Undo2 className="size-4" />
-              撤销
+              Undo
               <DropdownMenuShortcut>⌘Z</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem
@@ -245,12 +245,12 @@ export function CanvasLogoMenu({
               }
             >
               <Redo2 className="size-4" />
-              重做
+              Redo
               <DropdownMenuShortcut>⇧⌘Z</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={handleDuplicateElements}>
               <Copy className="size-4" />
-              复制对象
+              Duplicate
               <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
@@ -261,7 +261,7 @@ export function CanvasLogoMenu({
           <DropdownMenuGroup>
             <DropdownMenuItem onClick={() => excalidrawApi?.scrollToContent()}>
               <Maximize2 className="size-4" />
-              显示画布所有元素
+              Show every element on the canvas
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>

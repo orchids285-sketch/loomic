@@ -275,7 +275,7 @@ export const ToolBlockView = React.memo(function ToolBlockView({
               >
                 <path d="M9.78 11.78a.75.75 0 0 1-1.06 0l-3.5-3.5a.75.75 0 0 1 0-1.06l3.5-3.5a.75.75 0 0 1 1.06 1.06L6.56 8l3.22 3.22a.75.75 0 0 1 0 1.06Z" />
               </svg>
-              查看详情
+              View details
             </button>
           )}
         </div>
@@ -479,7 +479,7 @@ const ImageArtifactCard = React.memo(function ImageArtifactCard({
             <>
               <span>&middot;</span>
               <span className="hover:text-foreground transition-colors">
-                查看详情
+                View details
               </span>
             </>
           )}
@@ -580,7 +580,7 @@ function ToolDetailPanel({
                 >
                   <path d="M6.22 4.22a.75.75 0 0 1 1.06 0l3.5 3.5a.75.75 0 0 1 0 1.06l-3.5 3.5a.75.75 0 0 1-1.06-1.06L9.44 8 6.22 4.78a.75.75 0 0 1 0-1.06Z" />
                 </svg>
-                输入参数
+                Parameters
               </button>
               {inputExpanded && (
                 <div className="mt-2 space-y-1.5">
@@ -608,7 +608,7 @@ function ToolDetailPanel({
           ) : block.outputSummary ? (
             <div>
               <div className="text-xs font-medium text-muted-foreground mb-2">
-                输出
+                Output
               </div>
               <div className="rounded-lg bg-muted px-3 py-2.5 text-sm leading-relaxed text-foreground whitespace-pre-wrap break-words">
                 {block.outputSummary}
@@ -620,7 +620,7 @@ function ToolDetailPanel({
           {block.artifacts && block.artifacts.length > 0 && (
             <div>
               <div className="text-xs font-medium text-muted-foreground mb-2">
-                附件
+                Attachments
               </div>
               <div className="flex flex-wrap gap-2">
                 {block.artifacts.map((artifact: { type: string; url: string; title?: string }) =>
@@ -670,7 +670,7 @@ function ToolOutputRenderer({
     return (
       <div>
         <div className="text-xs font-medium text-muted-foreground mb-2">
-          输出
+          Output
         </div>
         <div className="space-y-2">
           {entries.map(([key, value]) => (
@@ -692,7 +692,7 @@ function ToolOutputRenderer({
   return (
     <div>
       <div className="text-xs font-medium text-muted-foreground mb-2">
-        输出
+        Output
       </div>
       <div className="rounded-xl bg-muted px-4 py-3 overflow-x-auto max-h-[360px] overflow-y-auto">
         <pre className="text-[12px] leading-5 text-muted-foreground whitespace-pre-wrap break-all font-mono">

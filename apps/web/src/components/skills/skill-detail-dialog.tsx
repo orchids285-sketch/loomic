@@ -33,9 +33,9 @@ const SOURCE_CONFIG: Record<
   SkillSource,
   { label: string; icon: typeof ShieldCheck }
 > = {
-  system: { label: "官方", icon: ShieldCheck },
-  community: { label: "社区", icon: Users },
-  user: { label: "自定义", icon: UserPen },
+  system: { label: "Official", icon: ShieldCheck },
+  community: { label: "Community", icon: Users },
+  user: { label: "Custom", icon: UserPen },
 };
 
 // ---------------------------------------------------------------------------
@@ -153,23 +153,23 @@ export function SkillDetailDialog({
         {/* Meta grid */}
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div className="space-y-0.5">
-            <span className="text-muted-foreground">作者</span>
+            <span className="text-muted-foreground">Author</span>
             <p className="font-medium text-foreground">{skill.author}</p>
           </div>
           <div className="space-y-0.5">
-            <span className="text-muted-foreground">版本</span>
+            <span className="text-muted-foreground">Version</span>
             <p className="font-medium text-foreground">v{skill.version}</p>
           </div>
           {skill.license && (
             <div className="space-y-0.5">
-              <span className="text-muted-foreground">许可证</span>
+              <span className="text-muted-foreground">Licence</span>
               <p className="font-medium text-foreground">{skill.license}</p>
             </div>
           )}
           <div className="space-y-0.5">
             <span className="text-muted-foreground flex items-center gap-1">
               <Calendar className="size-3" />
-              更新日期
+              Updated
             </span>
             <p className="font-medium text-foreground">{updatedDate}</p>
           </div>
@@ -189,7 +189,7 @@ export function SkillDetailDialog({
         {skill.files && skill.files.length > 0 && (
           <div className="space-y-1.5">
             <span className="text-xs font-medium text-muted-foreground">
-              附属文件 ({skill.files.length})
+              Attached files ({skill.files.length})
             </span>
             <div className="rounded-lg border border-border divide-y divide-border overflow-hidden">
               {skill.files.map((file: SkillFileEntry) => (
@@ -210,7 +210,7 @@ export function SkillDetailDialog({
                   animate={{ opacity: 1, scale: 1 }}
                   className="mr-auto flex items-center gap-2"
                 >
-                  <span className="text-xs text-destructive">确认删除?</span>
+                  <span className="text-xs text-destructive">Confirm deletion?</span>
                   <Button
                     variant="destructive"
                     size="xs"
@@ -222,14 +222,14 @@ export function SkillDetailDialog({
                       )
                     }
                   >
-                    {actionLoading === "delete" ? "删除中..." : "确认"}
+                    {actionLoading === "delete" ? "Deleting..." : "Confirm"}
                   </Button>
                   <Button
                     variant="ghost"
                     size="xs"
                     onClick={() => setConfirmDelete(false)}
                   >
-                    取消
+                    Cancel
                   </Button>
                 </motion.div>
               ) : (
@@ -240,7 +240,7 @@ export function SkillDetailDialog({
                   onClick={() => setConfirmDelete(true)}
                 >
                   <Trash2 className="size-3.5" />
-                  删除
+                  Delete
                 </Button>
               )}
             </>
@@ -250,7 +250,7 @@ export function SkillDetailDialog({
           {isUserSkill && (
             <Button variant="outline" size="sm" disabled>
               <Pen className="size-3.5" />
-              编辑
+              Edit
             </Button>
           )}
 
@@ -267,7 +267,7 @@ export function SkillDetailDialog({
                 )
               }
             >
-              {actionLoading === "uninstall" ? "卸载中..." : "卸载"}
+              {actionLoading === "uninstall" ? "Uninstalling..." : "Uninstall"}
             </Button>
           ) : (
             <Button
@@ -280,14 +280,14 @@ export function SkillDetailDialog({
                 )
               }
             >
-              {actionLoading === "install" ? "安装中..." : "安装"}
+              {actionLoading === "install" ? "Installing..." : "Install"}
             </Button>
           )}
         </DialogFooter>
 
         {/* Created date small note */}
         <p className="text-center text-[10px] text-muted-foreground">
-          创建于 {createdDate}
+          Created {createdDate}
         </p>
       </DialogContent>
     </Dialog>

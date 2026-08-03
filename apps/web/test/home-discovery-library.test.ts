@@ -16,7 +16,7 @@ describe("mapHomeDiscoveryRows", () => {
         created_at: "2026-03-29T00:00:00.000Z",
         is_active: true,
         key: "poster-and-ads",
-        label: "海报与广告",
+        label: "Posters and ads",
         sort_order: 1,
         updated_at: "2026-03-29T00:00:00.000Z",
       },
@@ -24,7 +24,7 @@ describe("mapHomeDiscoveryRows", () => {
         created_at: "2026-03-29T00:00:00.000Z",
         is_active: true,
         key: "branding-design",
-        label: "品牌设计",
+        label: "Branding",
         sort_order: 0,
         updated_at: "2026-03-29T00:00:00.000Z",
       },
@@ -68,7 +68,7 @@ describe("mapHomeDiscoveryRows", () => {
     expect(mapHomeDiscoveryRows(categories, cases)).toEqual([
       {
         key: "branding-design",
-        label: "品牌设计",
+        label: "Branding",
         cases: [
           {
             authorAvatarUrl: "avatar-a",
@@ -94,7 +94,7 @@ describe("mapHomeDiscoveryRows", () => {
       },
       {
         key: "poster-and-ads",
-        label: "海报与广告",
+        label: "Posters and ads",
         cases: [],
       },
     ]);

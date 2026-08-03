@@ -178,24 +178,24 @@ function MarketplaceDetailDialog({
         {/* Meta grid */}
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div className="space-y-0.5">
-            <span className="text-muted-foreground">作者</span>
+            <span className="text-muted-foreground">Author</span>
             <p className="font-medium text-foreground">{skill.author}</p>
           </div>
           {skill.license && (
             <div className="space-y-0.5">
-              <span className="text-muted-foreground">许可证</span>
+              <span className="text-muted-foreground">Licence</span>
               <p className="font-medium text-foreground">{skill.license}</p>
             </div>
           )}
           <div className="space-y-0.5">
-            <span className="text-muted-foreground">包名</span>
+            <span className="text-muted-foreground">Package</span>
             <p className="font-medium font-mono text-foreground">
               {skill.packageName}
             </p>
           </div>
           {skill.homepage && (
             <div className="space-y-0.5">
-              <span className="text-muted-foreground">主页</span>
+              <span className="text-muted-foreground">Home</span>
               <a
                 href={skill.homepage}
                 target="_blank"
@@ -203,7 +203,7 @@ function MarketplaceDetailDialog({
                 className="inline-flex items-center gap-1 font-medium text-foreground hover:underline"
                 onClick={(e) => e.stopPropagation()}
               >
-                链接
+                Link
                 <ExternalLink className="size-3" />
               </a>
             </div>
@@ -245,12 +245,12 @@ function MarketplaceDetailDialog({
             {installing ? (
               <>
                 <Loader2 className="size-3.5 animate-spin" />
-                安装中...
+                Installing...
               </>
             ) : (
               <>
                 <ArrowDownToLine className="size-3.5" />
-                安装
+                Install
               </>
             )}
           </Button>
@@ -376,13 +376,13 @@ export function MarketplacePanel({
       try {
         await installMarketplaceSkill(token, packageName);
         setDetailOpen(false);
-        success("技能已安装");
+        success("Skill installed");
         await onInstalled();
       } catch (err) {
         const msg =
           err instanceof ApiApplicationError
             ? err.message
-            : "安装失败，请重试";
+            : "Install failed. Please try again.";
         showError(msg);
         console.error("[marketplace] install failed:", err);
       }
@@ -401,10 +401,10 @@ export function MarketplacePanel({
         <Search className="absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
         <input
           type="text"
-          placeholder="搜索 skills.sh 市场..."
+          placeholder="Search the skills.sh marketplace..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          aria-label="搜索市场技能"
+          aria-label="Search marketplace skills"
           className="h-10 w-full rounded-lg border border-input bg-transparent pl-8 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 sm:h-8"
         />
         {loading && (
@@ -424,10 +424,10 @@ export function MarketplacePanel({
             <Package className="size-5 text-muted-foreground" />
           </div>
           <p className="text-sm font-medium text-foreground">
-            搜索社区技能
+            Search community skills
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            输入关键词搜索 skills.sh 上的社区技能包
+            Search skills.sh for community skill packs
           </p>
         </motion.div>
       )}
@@ -444,10 +444,10 @@ export function MarketplacePanel({
             <Search className="size-5 text-muted-foreground" />
           </div>
           <p className="text-sm font-medium text-foreground">
-            未找到匹配的技能
+            No matching skills
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            尝试其他搜索关键词
+            Try different search terms
           </p>
         </motion.div>
       )}
@@ -455,7 +455,7 @@ export function MarketplacePanel({
       {/* Results count */}
       {searched && skills.length > 0 && (
         <p className="mb-4 text-xs text-muted-foreground">
-          找到 {total} 个技能
+          Found {total}  skills
         </p>
       )}
 

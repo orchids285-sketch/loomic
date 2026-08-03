@@ -123,7 +123,7 @@ export default function HomePage() {
     } catch (err) {
       if (err instanceof ApiAuthError) {
         await signOutRef.current();
-        routerRef.current.replace("/login");
+        /* no sign-in screen in this build -- staying put beats bouncing to a 404 */
         return;
       }
       // Silently fail — the section just stays empty.
@@ -243,14 +243,14 @@ export default function HomePage() {
           custom={1}
           className="mb-1.5 text-xl font-bold text-foreground sm:text-2xl md:mb-2"
         >
-          让创意设计更简单
+          Creative design, made simpler
         </motion.h1>
         <motion.p
           variants={fadeUp}
           custom={2}
           className="mb-6 text-sm text-muted-foreground sm:text-base md:mb-8"
         >
-          你的 AI 设计助手，从想法到作品
+          Your AI design partner, from idea to finished work
         </motion.p>
 
         {/* Prompt input */}
@@ -287,13 +287,13 @@ export default function HomePage() {
           className="mb-3 flex items-center justify-between md:mb-4"
         >
           <h2 className="text-base font-medium text-foreground sm:text-lg">
-            最近项目
+            Recent projects
           </h2>
           <Link
             href="/projects"
             className="flex min-h-[44px] items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground sm:text-base"
           >
-            查看全部
+            View all
             <span className="flex h-6 w-6 -rotate-90 items-center justify-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -344,7 +344,7 @@ export default function HomePage() {
                   />
                 </svg>
                 <span className="text-xs font-semibold text-foreground sm:text-sm">
-                  新建项目
+                  New project
                 </span>
               </div>
             </motion.button>
@@ -394,7 +394,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="mt-0.5 text-[10px] text-muted-foreground sm:text-[11px]">
-                  更新于 {formatDate(project.updatedAt)}
+                  Updated {formatDate(project.updatedAt)}
                 </div>
               </motion.div>
             ))}

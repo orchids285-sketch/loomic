@@ -228,7 +228,7 @@ function TierToastItem({
                 type="button"
                 onClick={() => {
                   onDismiss();
-                  router.push("/pricing");
+                  /* billing lives in the host product, not here */
                 }}
                 className={`rounded-lg px-3 py-1.5 text-xs font-medium text-primary-foreground transition-opacity hover:opacity-90 ${config.progressColor}`}
               >

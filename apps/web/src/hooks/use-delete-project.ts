@@ -33,14 +33,14 @@ export function useDeleteProject(opts?: {
     setDeleting(true);
     try {
       await deleteProject(token, pendingId);
-      toastSuccess("项目已删除");
+      toastSuccess("Project deleted");
       opts?.onDeleted?.(pendingId);
     } catch (err) {
       if (err instanceof ApiAuthError) {
         await signOutRef.current();
         return;
       }
-      toastError("项目删除失败");
+      toastError("Could not delete the project");
     } finally {
       setDeleting(false);
       setPendingId(null);

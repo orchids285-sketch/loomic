@@ -209,7 +209,7 @@ export const HomePrompt = forwardRef<HomePromptHandle, HomePromptProps>(
                   onClick={onClearSelectedSeed}
                   className="shrink-0 rounded-full border border-border bg-background px-2 py-1 text-[11px] text-muted-foreground transition-colors hover:text-foreground"
                 >
-                  清除
+                  Clear
                 </button>
               ) : null}
             </div>
@@ -239,7 +239,7 @@ export const HomePrompt = forwardRef<HomePromptHandle, HomePromptProps>(
           onKeyDown={handleKeyDown}
           onPaste={handlePaste}
           onInput={handleInput}
-          placeholder="让 Loomic 帮你设计..."
+          placeholder="Ask Loomic to design something..."
           disabled={disabled}
           rows={2}
           className="w-full resize-none bg-transparent px-3 pt-3 pb-2 text-sm leading-relaxed text-foreground placeholder:text-muted-foreground focus:outline-none disabled:opacity-50 sm:px-4 sm:pt-4"

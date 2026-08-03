@@ -28,7 +28,7 @@ import type { BackgroundJobType } from "@loomic/shared";
 // Register all image/video providers via shared helper (keeps parity with app.ts)
 import { registerAllProviders } from "./generation/providers/register-all.js";
 
-// 代码执行由 LocalShellBackend 的内置 execute 工具直接处理，不走 PGMQ。
+// code execution goes straight through LocalShellBackend's execute tool, not PGMQ.
 const QUEUES = ["image_generation_jobs", "video_generation_jobs"] as const;
 
 const QUEUE_TO_TYPE: Record<string, BackgroundJobType> = {

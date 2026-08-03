@@ -71,15 +71,15 @@ const TOOL_ICONS: Record<ToolType, React.ComponentType<{ className?: string }>> 
 };
 
 const TOOL_LABELS: Record<ToolType, string> = {
-  hand: "拖拽画布 (H)",
-  selection: "选择 (V)",
-  rectangle: "矩形 (R)",
-  ellipse: "椭圆 (O)",
-  arrow: "箭头 (A)",
-  line: "直线 (L)",
-  freedraw: "画笔 (P)",
-  text: "文字 (T)",
-  image: "图片 (9)",
+  hand: "Pan (H)",
+  selection: "Select (V)",
+  rectangle: "Rectangle (R)",
+  ellipse: "Ellipse (O)",
+  arrow: "Arrow (A)",
+  line: "Line (L)",
+  freedraw: "Draw (P)",
+  text: "Text (T)",
+  image: "Image (9)",
 };
 
 type CanvasToolMenuProps = {
@@ -471,8 +471,8 @@ export function CanvasToolMenu({ accessToken, excalidrawApi, leftPanelOpen }: Ca
         {/* AI Image -- creates a placeholder on canvas */}
         <button
           type="button"
-          title="AI 生成图片"
-          aria-label="AI 生成图片"
+          title="AI-generated image"
+          aria-label="AI-generated image"
           onClick={handleCreateImageGenerator}
           className={`flex items-center justify-center h-8 w-8 rounded-lg transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 outline-none ${
             activeGeneratorId
@@ -486,8 +486,8 @@ export function CanvasToolMenu({ accessToken, excalidrawApi, leftPanelOpen }: Ca
         {/* AI Video -- creates a placeholder on canvas */}
         <button
           type="button"
-          title="AI 生成视频"
-          aria-label="AI 生成视频"
+          title="AI-generated video"
+          aria-label="AI-generated video"
           onClick={handleCreateVideoGenerator}
           className={`flex items-center justify-center h-8 w-8 rounded-lg transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 outline-none ${
             activeVideoGenId

@@ -251,7 +251,7 @@ export function CanvasBottomBar({ excalidrawApi, layersOpen, onToggleLayers, fil
         <div className="flex flex-col gap-3">
           {/* Title bar */}
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-foreground">画布背景色</span>
+            <span className="text-xs font-medium text-foreground">Canvas background</span>
             <button type="button" className="flex h-5 w-5 items-center justify-center rounded text-muted-foreground hover:text-foreground transition-colors"
               onClick={() => setBgPickerOpen(false)} aria-label="Close color picker">
               <CloseIcon className="h-3.5 w-3.5" />

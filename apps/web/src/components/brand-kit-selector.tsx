@@ -60,7 +60,7 @@ export function BrandKitSelector({
   }, [open]);
 
   const currentKit = kits.find((k) => k.id === currentBrandKitId);
-  const label = currentKit ? currentKit.name : "品牌套件: 无";
+  const label = currentKit ? currentKit.name : "Brand kit: none";
 
   const handleSelect = useCallback(
     async (kitId: string | null) => {
@@ -109,7 +109,7 @@ export function BrandKitSelector({
                 <Check className="h-4 w-4" />
               )}
             </span>
-            <span>无</span>
+            <span>None</span>
           </button>
 
           {/* Kit list */}
@@ -131,7 +131,7 @@ export function BrandKitSelector({
 
           {kits.length === 0 && (
             <p className="px-3 py-2 text-sm text-muted-foreground">
-              暂无品牌套件
+              No brand kits yet
             </p>
           )}
         </div>

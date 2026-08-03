@@ -189,7 +189,7 @@ export function AppSidebar() {
 
   const handleSignOut = async () => {
     await signOut();
-    router.replace("/login");
+    /* no sign-in screen in this build -- staying put beats bouncing to a 404 */
   };
 
   return (

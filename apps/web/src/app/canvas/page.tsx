@@ -179,7 +179,7 @@ function CanvasPageContent() {
   useEffect(() => {
     if (authLoading) return;
     if (!userId) {
-      routerRef.current.replace("/login");
+      /* no sign-in screen in this build -- staying put beats bouncing to a 404 */
       return;
     }
     const token = accessTokenRef.current;
@@ -210,7 +210,10 @@ function CanvasPageContent() {
       })
       .catch((err) => {
         if (err instanceof ApiAuthError) {
-          signOutRef.current().then(() => routerRef.current.replace("/login"));
+          // No accounts in this build, so there is nothing to sign out of and nowhere
+          // to bounce to. The canvas says it could not load rather than vanishing.
+          setError("Could not load this canvas.");
+          setPageLoading(false);
           return;
         }
         setError("Failed to load canvas.");

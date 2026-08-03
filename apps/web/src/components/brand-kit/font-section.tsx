@@ -63,7 +63,7 @@ export function FontSection({
 
   const handleManualInput = useCallback(() => {
     setMenuOpen(false);
-    const name = window.prompt("输入字体名称");
+    const name = window.prompt("Enter a font name");
     if (!name?.trim()) return;
     onAddFont({ family: name.trim(), variant: "regular", category: "sans-serif" });
   }, [onAddFont]);
@@ -138,14 +138,14 @@ export function FontSection({
                   }}
                   className="flex w-full items-center rounded-lg px-3 py-2 text-sm text-foreground hover:bg-muted transition-colors cursor-pointer"
                 >
-                  从字体库选择
+                  Choose from the library
                 </button>
                 <button
                   type="button"
                   onClick={handleManualInput}
                   className="flex w-full items-center rounded-lg px-3 py-2 text-sm text-foreground hover:bg-muted transition-colors cursor-pointer"
                 >
-                  手动输入字体名称
+                  Type a font name
                 </button>
               </div>
             )}

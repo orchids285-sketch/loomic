@@ -219,12 +219,12 @@ export function ImageGeneratorPanel({
       console.error("[image-gen] Generation error:", err);
       const handled = handleGenerationError(err);
       if (!handled) {
-        setError("图片生成失败，请重试或更换模型。");
+        setError("Image generation failed. Try again, or switch model.");
       }
       setLoading(false);
       updateImageGeneratorElement(excalidrawApi, elementId, {
         status: "error",
-        errorMessage: "生成失败",
+        errorMessage: "Generation failed",
       });
     }
   }, [
@@ -259,7 +259,7 @@ export function ImageGeneratorPanel({
             void handleGenerate();
           }
         }}
-        placeholder="今天我们要创作什么"
+        placeholder="What shall we make today?"
         disabled={loading}
         style={{ scrollbarWidth: "none" }}
         className="min-h-[74px] max-h-[140px] w-full resize-none border-none bg-transparent p-1 text-[14px] leading-[18px] text-foreground placeholder:text-muted-foreground focus:outline-none [&::-webkit-scrollbar]:hidden"

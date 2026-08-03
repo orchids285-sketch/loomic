@@ -136,7 +136,7 @@ export function SessionSelector({
           <div className="absolute left-0 top-full mt-1.5 z-50 w-[260px] rounded-lg border border-border bg-popover shadow-lg overflow-hidden">
             {/* Header */}
             <div className="px-3 pt-3 pb-2">
-              <p className="text-xs font-medium text-foreground mb-2">历史对话</p>
+              <p className="text-xs font-medium text-foreground mb-2">History</p>
               {/* Search */}
               <div className="relative">
                 <SearchIcon className="absolute left-2 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground/70" />
@@ -144,7 +144,7 @@ export function SessionSelector({
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  placeholder="请输入搜索关键词"
+                  placeholder="Enter a search term"
                   className="w-full rounded-md border border-input bg-muted py-1.5 pl-7 pr-2 text-xs text-foreground placeholder:text-muted-foreground/70 outline-none focus:border-input-border focus:bg-background transition-colors"
                 />
               </div>
@@ -154,7 +154,7 @@ export function SessionSelector({
             <div className="max-h-[240px] overflow-y-auto px-1 pb-1">
               {filtered.length === 0 && (
                 <p className="px-3 py-4 text-center text-xs text-muted-foreground/70">
-                  {search ? "无匹配结果" : "暂无对话"}
+                  {search ? "No results" : "No conversations yet"}
                 </p>
               )}
               {filtered.map((s) => (
@@ -190,7 +190,7 @@ export function SessionSelector({
                             setConfirmingId(null);
                           }}
                         >
-                          取消
+                          Cancel
                         </button>
                         <button
                           type="button"
@@ -200,7 +200,7 @@ export function SessionSelector({
                             handleDelete(s.id);
                           }}
                         >
-                          删除
+                          Delete
                         </button>
                       </div>
                     </>

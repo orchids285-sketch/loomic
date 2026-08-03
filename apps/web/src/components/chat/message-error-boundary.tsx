@@ -65,13 +65,13 @@ export class MessageErrorBoundary extends React.Component<
             clipRule="evenodd"
           />
         </svg>
-        <span>消息渲染异常</span>
+        <span>This message could not be displayed</span>
         <button
           type="button"
           onClick={this.reset}
           className="ml-auto text-xs text-foreground/60 hover:text-foreground underline transition-colors"
         >
-          重试
+          Retry
         </button>
       </div>
     );

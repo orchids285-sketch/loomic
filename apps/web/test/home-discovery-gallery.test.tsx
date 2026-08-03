@@ -20,7 +20,7 @@ describe("HomeDiscoveryGallery", () => {
       />,
     );
 
-    expect(screen.getByText("灵感发现")).toBeInTheDocument();
+    expect(screen.getByText("Discover")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "The ART & Cultural Arts Center" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Vintage Car Poster" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Cat Tarot Cards" })).toBeInTheDocument();
@@ -34,7 +34,7 @@ describe("HomeDiscoveryGallery", () => {
       />,
     );
 
-    await userEvent.click(screen.getByRole("button", { name: "品牌设计" }));
+    await userEvent.click(screen.getByRole("button", { name: "Branding" }));
 
     expect(screen.getByRole("button", { name: "The ART & Cultural Arts Center" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Vintage Car Poster" })).not.toBeInTheDocument();
@@ -59,12 +59,12 @@ describe("HomeDiscoveryGallery", () => {
         "https://lh3.googleusercontent.com/a/ACg8ocJ0nBUJkE5T9tLTwRlVXScB576EqOEeRS-6__BLxjYxrO5Jtxjjig=s96-c",
       authorName: "Ken Allman",
       categoryKey: "branding-design",
-      categoryLabel: "品牌设计",
+      categoryLabel: "Branding",
       coverImageUrl: expect.stringContaining("supabase.co"),
       id: "ji5ey5l",
       likeCount: 7,
       prompt:
-        "请基于 ART & Cultural Arts Center 这个灵感方向，为我做一套文化艺术中心品牌探索。输出品牌关键词、主视觉方向、海报延展和社交媒体视觉提案，整体气质要现代、文化感强、适合艺术活动传播。",
+        "Using ART & Cultural Arts Center as the direction, build a brand exploration for a cultural arts centre. Output brand keywords, a key visual direction, poster extensions and social media visual proposals -- modern, culturally rich, and suited to promoting arts events.",
       title: "The ART & Cultural Arts Center",
       viewCount: 549,
     });

@@ -29,13 +29,13 @@ export function ProjectList({
       {/* Header */}
       <div className="mb-4 sm:mb-6">
         <h1 className="text-base font-medium text-foreground sm:text-lg">
-          项目
+          Project
         </h1>
       </div>
 
       {/* Card grid -- consistent responsive breakpoints */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {/* "+ 新建项目" card */}
+        {/* "+ New project" card */}
         <div
           role="button"
           tabIndex={0}
@@ -63,7 +63,7 @@ export function ProjectList({
               />
             </svg>
             <span className="text-xs font-semibold text-foreground sm:text-sm">
-              新建项目
+              New project
             </span>
           </div>
         </div>
@@ -112,7 +112,7 @@ export function ProjectList({
               </div>
             </div>
             <div className="mt-0.5 text-[10px] text-muted-foreground sm:text-[11px]">
-              更新于 {formatDate(project.updatedAt)}
+              Updated {formatDate(project.updatedAt)}
             </div>
           </Link>
         ))}

@@ -46,7 +46,7 @@ export function CreditInsufficientDialog({
   const handleUpgrade = useCallback(async () => {
     const token = accessTokenRef.current;
     if (!token) {
-      window.location.href = "/pricing";
+      /* billing lives in the host product, not here */
       return;
     }
 
@@ -58,7 +58,7 @@ export function CreditInsufficientDialog({
       openLemonCheckout(checkoutUrl);
     } catch {
       // Fallback to pricing page on error
-      window.location.href = "/pricing";
+      /* billing lives in the host product, not here */
     } finally {
       setUpgrading(false);
     }

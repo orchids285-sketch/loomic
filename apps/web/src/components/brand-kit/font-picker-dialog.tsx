@@ -11,7 +11,7 @@ interface FontPickerDialogProps {
 }
 
 const CATEGORIES = [
-  { value: "", label: "全部字体" },
+  { value: "", label: "All fonts" },
   { value: "sans-serif", label: "Sans-serif" },
   { value: "serif", label: "Serif" },
   { value: "display", label: "Display" },
@@ -99,7 +99,7 @@ export function FontPickerDialog({
         <div className="p-3 border-b">
           <input
             type="text"
-            placeholder="搜索字体..."
+            placeholder="Search fonts..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full px-3 py-1.5 text-sm border rounded-lg outline-none focus:ring-1 focus:ring-black/10"
@@ -140,7 +140,7 @@ export function FontPickerDialog({
           ))}
           {fonts.length === 0 && (
             <p className="p-4 text-sm text-muted-foreground text-center">
-              {search ? "未找到匹配字体" : "加载中..."}
+              {search ? "No matching fonts" : "Loading..."}
             </p>
           )}
         </div>
@@ -152,7 +152,7 @@ export function FontPickerDialog({
             onClick={onClose}
             className="px-4 py-1.5 text-sm border rounded-lg hover:bg-muted cursor-pointer"
           >
-            取消
+            Cancel
           </button>
           <button
             type="button"
@@ -160,7 +160,7 @@ export function FontPickerDialog({
             disabled={!selected}
             className="px-4 py-1.5 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 disabled:opacity-40 cursor-pointer"
           >
-            添加
+            Add
           </button>
         </div>
       </div>

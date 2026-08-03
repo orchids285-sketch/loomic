@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { useAuth } from "@/lib/auth-context";
@@ -15,21 +13,13 @@ export default function WorkspaceLayout({
 }: {
   children: ReactNode;
 }) {
-  const { user, loading } = useAuth();
-  const router = useRouter();
+  const { loading } = useAuth();
 
-  useEffect(() => {
-    if (!loading && !user) {
-      router.replace("/login");
-    }
-  }, [loading, user, router]);
-
+  // No sign-in gate. This build has no accounts of its own: it runs inside a product the
+  // user is already signed into, so a second login would be a second account to manage --
+  // and with the gate in place every screen bounced to a page that no longer exists.
   if (loading) {
     return <LoadingScreen />;
-  }
-
-  if (!user) {
-    return null;
   }
 
   return (
@@ -39,7 +29,7 @@ export default function WorkspaceLayout({
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-background focus:text-foreground focus:rounded-md focus:shadow-lg"
       >
-        跳到主内容
+        Skip to main content
       </a>
       <AppSidebar />
       {/* pb-14 on mobile for the fixed bottom navigation bar, reset on md+ */}

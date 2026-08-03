@@ -54,7 +54,7 @@ export default function ProjectsPage() {
     } catch (err) {
       if (err instanceof ApiAuthError) {
         await signOutRef.current();
-        routerRef.current.replace("/login");
+        /* no sign-in screen in this build -- staying put beats bouncing to a 404 */
         return;
       }
       setLoadError("Failed to load data. Please try again.");

@@ -31,7 +31,7 @@ export function useGenerationErrorHandler() {
       if (!(error instanceof ApiApplicationError)) {
         // Not an application error — log for debugging, show generic toast to user
         console.error("[generation-error] Unexpected error:", error);
-        showErrorToast("生成失败，请重试。");
+        showErrorToast("Generation failed. Please try again.");
         return false;
       }
 
@@ -48,7 +48,7 @@ export function useGenerationErrorHandler() {
 
       // Other application errors: log raw message, show generic toast to user
       console.error("[generation-error] Application error:", error.code, error.message);
-      showErrorToast("生成失败，请重试。");
+      showErrorToast("Generation failed. Please try again.");
       return false;
     },
     [showTierLimit, showErrorToast],

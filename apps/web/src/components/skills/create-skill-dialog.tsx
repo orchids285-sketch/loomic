@@ -166,16 +166,16 @@ export function CreateSkillDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>添加自定义技能</DialogTitle>
+          <DialogTitle>Add a custom skill</DialogTitle>
           <DialogDescription>
-            创建新的技能来扩展智能体的能力。
+            Create a new skill to extend what the agent can do.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
           <div className="space-y-1.5">
-            <Label htmlFor="skill-name">名称</Label>
+            <Label htmlFor="skill-name">Name</Label>
             <Input
               id="skill-name"
               placeholder="e.g. UI Design Expert"
@@ -187,7 +187,7 @@ export function CreateSkillDialog({
 
           {/* Category */}
           <div className="space-y-1.5">
-            <Label htmlFor="skill-category">分类</Label>
+            <Label htmlFor="skill-category">Category</Label>
             <select
               id="skill-category"
               value={category}
@@ -204,11 +204,11 @@ export function CreateSkillDialog({
 
           {/* Description */}
           <div className="space-y-1.5">
-            <Label htmlFor="skill-desc">描述</Label>
+            <Label htmlFor="skill-desc">Description</Label>
             <textarea
               id="skill-desc"
               rows={2}
-              placeholder="简述技能的功能和用途..."
+              placeholder="Briefly describe what this skill does..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               maxLength={2000}
@@ -219,7 +219,7 @@ export function CreateSkillDialog({
           {/* Skill content */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <Label htmlFor="skill-content">SKILL.md 内容</Label>
+              <Label htmlFor="skill-content">SKILL.md contents</Label>
               <Button
                 type="button"
                 variant="ghost"
@@ -227,7 +227,7 @@ export function CreateSkillDialog({
                 onClick={() => setSkillContent(SKILL_TEMPLATE)}
               >
                 <FileText className="size-3" />
-                使用模板
+                Use template
               </Button>
             </div>
             <textarea
@@ -243,7 +243,7 @@ export function CreateSkillDialog({
           {/* Attached files (optional) */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <Label>附属文件（可选）</Label>
+              <Label>Attached files (optional)</Label>
               <Button
                 type="button"
                 variant="ghost"
@@ -251,7 +251,7 @@ export function CreateSkillDialog({
                 onClick={addFile}
               >
                 <Plus className="size-3" />
-                添加
+                Add
               </Button>
             </div>
 
@@ -272,7 +272,7 @@ export function CreateSkillDialog({
                         type="button"
                         onClick={() => removeFile(index)}
                         className="absolute top-2 right-2 p-0.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-                        aria-label="删除文件"
+                        aria-label="Delete file"
                       >
                         <X className="size-3.5" />
                       </button>
@@ -290,7 +290,7 @@ export function CreateSkillDialog({
                         />
                         {showPathError && (
                           <p className="mt-1 text-[11px] text-destructive">
-                            路径必须以 scripts/、references/ 或 assets/ 开头
+                            The path must start with scripts/, references/ or assets/
                           </p>
                         )}
                       </div>
@@ -298,7 +298,7 @@ export function CreateSkillDialog({
                       {/* File content textarea */}
                       <textarea
                         rows={4}
-                        placeholder="文件内容..."
+                        placeholder="File contents..."
                         value={file.content}
                         onChange={(e) =>
                           updateFile(index, "content", e.target.value)
@@ -310,7 +310,7 @@ export function CreateSkillDialog({
                 })}
 
                 <p className="text-[11px] text-muted-foreground">
-                  支持的路径前缀：scripts/、references/、assets/
+                  Allowed path prefixes: scripts/, references/, assets/
                 </p>
               </div>
             )}
@@ -322,10 +322,10 @@ export function CreateSkillDialog({
               variant="outline"
               onClick={() => handleOpenChange(false)}
             >
-              取消
+              Cancel
             </Button>
             <Button type="submit" disabled={!canSubmit || submitting}>
-              {submitting ? "创建中..." : "创建"}
+              {submitting ? "Creating..." : "Create"}
             </Button>
           </DialogFooter>
         </form>

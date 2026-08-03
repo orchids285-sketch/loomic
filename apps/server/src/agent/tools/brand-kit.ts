@@ -95,7 +95,7 @@ export function createBrandKitTool(
     {
       name: "get_brand_kit",
       description:
-        "查询当前项目绑定的品牌套件信息，包含设计指南、颜色、字体、Logo等品牌资产。当用户提到品牌、风格、设计规范时使用此工具。",
+        "Read the brand kit attached to this project: guidelines, colours, fonts, logo and other brand assets. Use this whenever the user mentions the brand, its style or its design rules.",
       schema: brandKitSchema,
     },
   );

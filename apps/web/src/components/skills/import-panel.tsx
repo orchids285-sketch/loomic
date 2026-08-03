@@ -67,7 +67,7 @@ export function ImportPanel({
     try {
       new URL(trimmed);
     } catch {
-      setImportState({ status: "error", message: "请输入有效的 URL" });
+      setImportState({ status: "error", message: "Enter a valid URL" });
       return;
     }
 
@@ -76,13 +76,13 @@ export function ImportPanel({
     try {
       const result = await importSkillFromUrl(token, trimmed);
       setImportState({ status: "success", skillName: result.skill.name });
-      success(`技能 "${result.skill.name}" 导入成功`);
+      success(`Skill "${result.skill.name}" Imported`);
       await onImported();
     } catch (err) {
       const msg =
         err instanceof ApiApplicationError
           ? err.message
-          : "导入失败，请检查 URL 后重试";
+          : "Import failed. Check the URL and try again.";
       setImportState({ status: "error", message: msg });
       showError(msg);
       console.error("[import] skill import failed:", err);
@@ -127,10 +127,10 @@ export function ImportPanel({
           </div>
           <div>
             <h3 className="text-sm font-medium text-foreground">
-              从 URL 导入技能
+              Import a skill from a URL
             </h3>
             <p className="mt-0.5 text-xs text-muted-foreground">
-              支持 GitHub 仓库 URL 和 npm tarball URL
+              GitHub repository URLs and npm tarball URLs are supported
             </p>
           </div>
         </div>
@@ -152,7 +152,7 @@ export function ImportPanel({
               }}
               onKeyDown={handleKeyDown}
               disabled={isLoading}
-              aria-label="技能 URL"
+              aria-label="Skill URL"
               className={cn(
                 "h-8 w-full rounded-lg border bg-transparent pl-8 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:opacity-50",
                 isError
@@ -169,11 +169,11 @@ export function ImportPanel({
             {isLoading ? (
               <>
                 <Loader2 className="size-3.5 animate-spin" />
-                导入中...
+                Importing...
               </>
             ) : (
               <>
-                导入
+                Import
                 <ArrowRight className="size-3.5" />
               </>
             )}
@@ -204,7 +204,7 @@ export function ImportPanel({
               <span className="text-sm font-medium text-foreground">
                 {importState.skillName}
               </span>
-              <span className="text-xs text-muted-foreground">已导入</span>
+              <span className="text-xs text-muted-foreground">Imported</span>
             </div>
             <div className="flex items-center gap-2">
               {onSwitchToInstalled && (
@@ -213,11 +213,11 @@ export function ImportPanel({
                   size="xs"
                   onClick={onSwitchToInstalled}
                 >
-                  查看已安装
+                  View installed
                 </Button>
               )}
               <Button variant="ghost" size="xs" onClick={handleReset}>
-                继续导入
+                Import another
               </Button>
             </div>
           </motion.div>
@@ -226,7 +226,7 @@ export function ImportPanel({
         {/* Hint examples */}
         <div className="mt-4 space-y-1.5">
           <p className="text-[11px] font-medium text-muted-foreground">
-            支持的格式
+            Supported formats
           </p>
           <div className="space-y-1">
             <p className="font-mono text-[11px] text-muted-foreground/70">

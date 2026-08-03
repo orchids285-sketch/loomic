@@ -224,20 +224,7 @@ export function CreditBalance() {
                 </div>
               )}
 
-              {/* Upgrade link */}
-              {plan !== "business" && (
-                <Link
-                  href="/pricing"
-                  onClick={() => setOpen(false)}
-                  className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted"
-                >
-                  <span className="flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-muted-foreground" />
-                    Upgrade Plan
-                  </span>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                </Link>
-              )}
+              {/* No upgrade link -- see billing-section: one product, one place to pay. */}
               </motion.div>
             </div>
           </AnimatePresence>,

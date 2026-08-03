@@ -47,7 +47,7 @@ export function CreateProjectDialog({
       }
       await onSubmit(payload);
       // Success -- reset and close
-      toastSuccess("项目创建成功");
+      toastSuccess("Project created");
       setName("");
       setDescription("");
       onOpenChange(false);
@@ -58,11 +58,11 @@ export function CreateProjectDialog({
           setError("A project with this name already exists. Try a different name.");
         } else {
           setError("Failed to create project. Please try again.");
-          toastError("项目创建失败");
+          toastError("Could not create the project");
         }
       } else {
         setError("Failed to create project. Please try again.");
-        toastError("项目创建失败");
+        toastError("Could not create the project");
       }
     } finally {
       setLoading(false);

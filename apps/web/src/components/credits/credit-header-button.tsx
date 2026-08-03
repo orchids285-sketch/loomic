@@ -97,16 +97,8 @@ export function CreditHeaderButton() {
   return (
     <>
       <div ref={btnRef} className="flex items-center gap-2">
-        {/* Upgrade button (non-business plans) */}
-        {plan !== "business" && (
-          <Link
-            href="/pricing"
-            className="flex h-8 items-center gap-1.5 rounded-lg bg-primary px-3 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            <Zap className="h-3 w-3 text-muted-foreground" />
-            <span>升级</span>
-          </Link>
-        )}
+        {/* No upgrade CTA: this runs inside a product with its own billing, and a
+            second plan to buy is a bill the user cannot pay here and would not expect. */}
 
         {/* Credit balance button */}
         <button

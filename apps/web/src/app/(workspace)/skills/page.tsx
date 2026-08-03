@@ -40,9 +40,9 @@ import { cn } from "@/lib/utils";
 type SkillsTab = "installed" | "marketplace" | "import";
 
 const TAB_LABELS: Record<SkillsTab, string> = {
-  installed: "已安装",
-  marketplace: "市场",
-  import: "导入",
+  installed: "Installed",
+  marketplace: "Marketplace",
+  import: "Import",
 };
 
 const TABS: SkillsTab[] = ["installed", "marketplace", "import"];
@@ -347,7 +347,7 @@ export default function SkillsPage() {
       {/* Header */}
       <h1 className="text-base font-semibold sm:text-lg">Skills</h1>
       <p className="mt-1 mb-4 text-xs text-muted-foreground sm:mb-6 sm:text-sm">
-        为您的智能体提供预封装且可重复的最佳实践与工具
+        Packaged, repeatable best practices and tools for your agent
       </p>
 
       {/* Tab navigation -- scrollable on narrow screens */}
@@ -384,7 +384,7 @@ export default function SkillsPage() {
                     className="min-h-[44px] sm:min-h-0"
                   >
                     <ListFilter className="size-3.5" />
-                    筛选
+                    Filter
                     {selectedCategories.size > 0 && (
                       <span className="ml-1 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-[10px] font-medium text-background">
                         {selectedCategories.size}
@@ -411,10 +411,10 @@ export default function SkillsPage() {
               <Search className="absolute left-2.5 top-1/2 size-3.5 -translate-y-1/2 text-muted-foreground" />
               <input
                 type="text"
-                placeholder="搜索技能..."
+                placeholder="Search skills..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                aria-label="搜索技能"
+                aria-label="Search skills"
                 className="h-10 w-full rounded-lg border border-input bg-transparent pl-8 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 sm:h-7"
               />
             </div>
@@ -427,7 +427,7 @@ export default function SkillsPage() {
               onClick={() => setOfficialOnly((p) => !p)}
             >
               <ShieldCheck className="size-3.5" />
-              官方
+              Official
             </Button>
           </div>
 
@@ -460,16 +460,16 @@ export default function SkillsPage() {
 
             <div className="flex-1 min-w-0">
               <h3 className="text-sm font-medium text-foreground">
-                添加自定义技能
+                Add a custom skill
               </h3>
               <p className="mt-0.5 text-xs text-muted-foreground">
-                添加技能以解锁您智能体的新功能
+                Add a skill to unlock new abilities
               </p>
             </div>
 
             <Button size="sm" onClick={() => setCreateOpen(true)}>
               <Plus className="size-3.5" />
-              添加
+              Add
             </Button>
           </motion.div>
 
@@ -485,12 +485,12 @@ export default function SkillsPage() {
                 <Search className="size-5 text-muted-foreground" />
               </div>
               <p className="text-sm font-medium text-foreground">
-                {hasActiveFilters ? "未找到匹配的技能" : "暂无技能"}
+                {hasActiveFilters ? "No matching skills" : "No skills yet"}
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
                 {hasActiveFilters
-                  ? "尝试调整搜索或筛选条件"
-                  : "创建自定义技能来扩展您智能体的能力"}
+                  ? "Try a different search or filter"
+                  : "Create a custom skill to extend what your agent can do"}
               </p>
             </motion.div>
           ) : (

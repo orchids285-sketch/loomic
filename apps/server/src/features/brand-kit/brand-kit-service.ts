@@ -648,7 +648,7 @@ export function createBrandKitService(options: {
         .from("brand_kits")
         .insert({
           user_id: user.id,
-          name: `${source.name} (副本)`,
+          name: `${source.name} (copy)`,
           guidance_text: source.guidance_text,
         })
         .select("id")

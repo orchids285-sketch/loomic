@@ -81,7 +81,7 @@ const FileRow = memo(function FileRow({
         type="button"
         onClick={handleDownload}
         className="flex h-4 w-4 shrink-0 items-center justify-center text-foreground hover:text-muted-foreground transition-colors"
-        title="下载"
+        title="Downloads"
         aria-label={`Download ${file.name}`}
       >
         <DownloadIcon className="h-4 w-4" />
@@ -150,7 +150,7 @@ export function CanvasFilesPanel({ excalidrawApi, open, onClose }: CanvasFilesPa
     >
       {/* Title bar */}
       <div className="flex h-[50px] shrink-0 items-center justify-between px-4">
-        <span className="text-base font-medium text-foreground">已生成文件列表</span>
+        <span className="text-base font-medium text-foreground">Generated files</span>
         <button
           type="button"
           className="flex h-7 w-7 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
@@ -164,13 +164,13 @@ export function CanvasFilesPanel({ excalidrawApi, open, onClose }: CanvasFilesPa
       {/* File list -- uses content-visibility and memoized rows for performance */}
       <div className="flex-1 overflow-y-auto px-2 pb-4" style={{ contain: "layout style" }}>
         {imageFiles.length === 0 ? (
-          <p className="px-2 py-8 text-center text-sm text-muted-foreground">暂无生成文件</p>
+          <p className="px-2 py-8 text-center text-sm text-muted-foreground">No generated files yet</p>
         ) : (
           <div className="flex flex-col gap-1">
             {imageFiles.map((file) => (
               <FileRow key={file.id} file={file} onDownload={handleDownload} />
             ))}
-            <p className="py-2 text-center text-sm text-muted-foreground">到底了</p>
+            <p className="py-2 text-center text-sm text-muted-foreground">That's everything</p>
           </div>
         )}
       </div>

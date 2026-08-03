@@ -92,7 +92,7 @@ describe("@loomic/shared contracts", () => {
     const result = runCreateRequestSchema.parse({
       sessionId: "session-1",
       conversationId: "conv-1",
-      prompt: "参考品牌资产生成一张海报",
+      prompt: "Generate a poster from the brand assets",
       mentions: [
         {
           mentionType: "image-model",
@@ -102,7 +102,7 @@ describe("@loomic/shared contracts", () => {
         {
           mentionType: "brand-kit-asset",
           id: "brand-logo-1",
-          label: "Loomic 主 Logo",
+          label: "Loomic primary logo",
           assetType: "logo",
           fileUrl: "https://example.com/logo.png",
         },

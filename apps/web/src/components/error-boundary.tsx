@@ -83,11 +83,11 @@ export class ErrorBoundary extends React.Component<
           </div>
 
           <div className="space-y-1">
-            <h3 className="text-sm font-medium text-foreground">出错了</h3>
+            <h3 className="text-sm font-medium text-foreground">Something went wrong</h3>
             <p className="text-xs text-muted-foreground">
               {process.env.NODE_ENV === "development"
                 ? error.message
-                : "页面组件发生异常，请重试或刷新页面"}
+                : "Something went wrong on this page. Try again, or reload."}
             </p>
           </div>
 
@@ -97,14 +97,14 @@ export class ErrorBoundary extends React.Component<
               onClick={this.reset}
               className="rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              重试
+              Retry
             </button>
             <button
               type="button"
               onClick={() => window.location.reload()}
               className="rounded-md border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
-              刷新页面
+              Reload
             </button>
           </div>
         </div>

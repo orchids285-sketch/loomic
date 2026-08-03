@@ -245,12 +245,12 @@ export function VideoGeneratorPanel({
       console.error("[video-gen] Generation error:", err);
       const handled = handleGenerationError(err);
       if (!handled) {
-        setError("视频生成失败，请重试或更换模型。");
+        setError("Video generation failed. Try again, or switch model.");
       }
       setLoading(false);
       updateVideoGeneratorElement(excalidrawApi, elementId, {
         status: "error",
-        errorMessage: "生成失败",
+        errorMessage: "Generation failed",
       });
     }
   }, [
@@ -297,14 +297,14 @@ export function VideoGeneratorPanel({
           {firstFrame ? (
             <img
               src={firstFrame.dataUrl}
-              alt="首帧"
+              alt="First frame"
               className="h-full w-full rounded-2xl object-cover"
             />
           ) : (
             <>
               <Plus className="h-4 w-4 text-muted-foreground" />
               <span className="text-[10px] text-muted-foreground">
-                首帧
+                First frame
               </span>
             </>
           )}
@@ -326,14 +326,14 @@ export function VideoGeneratorPanel({
           {lastFrame ? (
             <img
               src={lastFrame.dataUrl}
-              alt="尾帧"
+              alt="Last frame"
               className="h-full w-full rounded-2xl object-cover"
             />
           ) : (
             <>
               <Plus className="h-4 w-4 text-muted-foreground" />
               <span className="text-[10px] text-muted-foreground">
-                尾帧
+                Last frame
               </span>
             </>
           )}
@@ -352,7 +352,7 @@ export function VideoGeneratorPanel({
               void handleGenerate();
             }
           }}
-          placeholder="今天我们要创作什么"
+          placeholder="What shall we make today?"
           disabled={loading}
           style={{ scrollbarWidth: "none" }}
           className="min-h-[44px] max-h-[140px] w-full resize-none border-none bg-transparent text-[14px] leading-[22px] text-foreground placeholder:text-muted-foreground focus:outline-none [&::-webkit-scrollbar]:hidden"

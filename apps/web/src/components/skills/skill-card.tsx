@@ -50,9 +50,9 @@ const SOURCE_CONFIG: Record<
   SkillSource,
   { label: string; icon: typeof ShieldCheck }
 > = {
-  system: { label: "官方", icon: ShieldCheck },
-  community: { label: "社区", icon: Users },
-  user: { label: "自定义", icon: UserPen },
+  system: { label: "Official", icon: ShieldCheck },
+  community: { label: "Community", icon: Users },
+  user: { label: "Custom", icon: UserPen },
 };
 
 // ---------------------------------------------------------------------------
@@ -204,7 +204,7 @@ export function SkillCard({
                   onClick(skill);
                 }}
               >
-                查看详情
+                View details
               </DropdownMenuItem>
               {skill.installed && onUninstall && (
                 <DropdownMenuItem
@@ -214,7 +214,7 @@ export function SkillCard({
                     onUninstall(skill.id);
                   }}
                 >
-                  卸载
+                  Uninstall
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>

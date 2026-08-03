@@ -26,7 +26,7 @@ export function DeleteProjectDialog({
     <Dialog open={open} onOpenChange={(v) => { if (!v) onCancel(); }}>
       <DialogContent className="sm:max-w-sm" showCloseButton={false}>
         <p className="text-sm font-medium text-foreground">
-          确定删除此项目？此操作无法撤销。
+          Delete this project? This cannot be undone.
         </p>
         <div className="mt-4 flex items-center justify-end gap-3">
           <Button
@@ -35,7 +35,7 @@ export function DeleteProjectDialog({
             disabled={deleting}
             className="rounded-xl"
           >
-            取消
+            Cancel
           </Button>
           <Button
             onClick={onConfirm}
@@ -50,7 +50,7 @@ export function DeleteProjectDialog({
               >
                 <Loader2 size={16} />
               </motion.span>
-            ) : "永久删除"}
+            ) : "Delete permanently"}
           </Button>
         </div>
       </DialogContent>

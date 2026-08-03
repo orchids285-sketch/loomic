@@ -102,12 +102,8 @@ export function BillingSection() {
 
       {/* Actions */}
       <div className="flex flex-wrap gap-3">
-        <Link href="/pricing">
-          <Button variant="default" size="lg">
-            <CreditCard className="mr-1.5 h-4 w-4" />
-            {isFree ? "Upgrade Plan" : "Change Plan"}
-          </Button>
-        </Link>
+        {/* Plan changes happen in the host product, which is where the subscription
+            actually lives. Offering it twice invites the user to buy the wrong one. */}
 
         {subscription?.customerPortalUrl && (
           <a

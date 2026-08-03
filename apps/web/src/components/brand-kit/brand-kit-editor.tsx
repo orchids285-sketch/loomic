@@ -146,7 +146,7 @@ export function BrandKitEditor({
         <div className="flex items-center gap-3 shrink-0 ml-4">
           {/* Apply to new projects toggle */}
           <span className="text-sm text-muted-foreground whitespace-nowrap">
-            应用到新项目
+            Apply to a new project
           </span>
           <button
             type="button"
@@ -274,7 +274,7 @@ function MoreMenu({
             className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-foreground hover:bg-muted transition-colors cursor-pointer"
           >
             <Copy className="h-4 w-4 text-muted-foreground" />
-            复制
+            Copy
           </button>
           <button
             type="button"
@@ -285,7 +285,7 @@ function MoreMenu({
             className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-destructive hover:bg-destructive/10 transition-colors cursor-pointer"
           >
             <Trash2 className="h-4 w-4" />
-            删除
+            Delete
           </button>
         </div>
       )}
