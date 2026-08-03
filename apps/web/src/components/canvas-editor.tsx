@@ -566,7 +566,14 @@ export function CanvasEditor({
           theme={resolvedTheme === "dark" ? "dark" : "light"}
           initialData={{
             elements: initialContent.elements as any,
-            appState: initialContent.appState as any,
+            // The scene's background is Excalidraw's own setting, not the app theme, and
+            // it defaults to white -- so a dark tool would still open onto a white sheet.
+            // Defaulted first and the saved value spread after, so a background the user
+            // deliberately chose on this canvas still wins.
+            appState: {
+              viewBackgroundColor: "#191815",
+              ...(initialContent.appState as any),
+            } as any,
             files: inlineFiles as any,
           }}
           onChange={handleChange}

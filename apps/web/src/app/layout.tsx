@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import Script from "next/script";
 import { Geist } from "next/font/google";
@@ -16,6 +16,13 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   title: "Images",
   description: "Design on an infinite canvas.",
+};
+
+// Scrollbars, form controls and the space beyond the page follow color-scheme rather than
+// our tokens. Without this the browser paints its own light chrome around a dark tool.
+export const viewport: Viewport = {
+  colorScheme: "dark",
+  themeColor: "#191815",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

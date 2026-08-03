@@ -56,86 +56,99 @@
 }
 
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.90 0.17 115);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --success: oklch(0.60 0.15 145);
-    --success-foreground: oklch(0.985 0 0);
-    --warning: oklch(0.75 0.15 85);
-    --warning-foreground: oklch(0.985 0 0);
-    --info: oklch(0.65 0.1 250);
-    --info-foreground: oklch(0.985 0 0);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.90 0.17 115);
-    --border-light: oklch(0.94 0 0);
-    --input-border: oklch(0.84 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
+    /* Anchored on #191815 -- a warm near-black, not a blue-grey. Everything else is a
+       step along the same warm ramp so panels separate from the ground by lightness
+       alone, without a second hue arriving to argue with it. */
+    --background: #191815;
+    --foreground: #edebe6;
+    --card: #211f1b;
+    --card-foreground: #edebe6;
+    --popover: #211f1b;
+    --popover-foreground: #edebe6;
+    /* Buttons are light on dark here, so primary is the light end of the ramp. */
+    --primary: #edebe6;
+    --primary-foreground: #191815;
+    --secondary: #2a2823;
+    --secondary-foreground: #edebe6;
+    --muted: #2a2823;
+    --muted-foreground: #9b968c;
+    --accent: #2a2823;
+    --accent-foreground: #edebe6;
+    --destructive: oklch(0.62 0.19 25);
+    --success: oklch(0.62 0.13 145);
+    --success-foreground: #191815;
+    --warning: oklch(0.78 0.11 85);
+    --warning-foreground: #191815;
+    --info: oklch(0.68 0.07 250);
+    --info-foreground: #191815;
+    --border: #32302a;
+    --input: #32302a;
+    --ring: #4a4640;
+    --border-light: #2a2823;
+    --input-border: #3d3a33;
+    --chart-1: #edebe6;
+    --chart-2: #9b968c;
+    --chart-3: #6f6a61;
+    --chart-4: #4a4640;
+    --chart-5: #32302a;
     --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    --sidebar: #1e1c19;
+    --sidebar-foreground: #edebe6;
+    --sidebar-primary: #edebe6;
+    --sidebar-primary-foreground: #191815;
+    --sidebar-accent: #2a2823;
+    --sidebar-accent-foreground: #edebe6;
+    --sidebar-border: #32302a;
+    --sidebar-ring: #4a4640;
 }
 
+/* Same palette: there is one theme, and .dark exists so `dark:` utilities and
+   Excalidraw's own dark mode still key off it. */
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --success: oklch(0.65 0.15 145);
-    --success-foreground: oklch(0.145 0 0);
-    --warning: oklch(0.80 0.12 85);
-    --warning-foreground: oklch(0.145 0 0);
-    --info: oklch(0.70 0.08 250);
-    --info-foreground: oklch(0.145 0 0);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    /* Anchored on #191815 -- a warm near-black, not a blue-grey. Everything else is a
+       step along the same warm ramp so panels separate from the ground by lightness
+       alone, without a second hue arriving to argue with it. */
+    --background: #191815;
+    --foreground: #edebe6;
+    --card: #211f1b;
+    --card-foreground: #edebe6;
+    --popover: #211f1b;
+    --popover-foreground: #edebe6;
+    /* Buttons are light on dark here, so primary is the light end of the ramp. */
+    --primary: #edebe6;
+    --primary-foreground: #191815;
+    --secondary: #2a2823;
+    --secondary-foreground: #edebe6;
+    --muted: #2a2823;
+    --muted-foreground: #9b968c;
+    --accent: #2a2823;
+    --accent-foreground: #edebe6;
+    --destructive: oklch(0.62 0.19 25);
+    --success: oklch(0.62 0.13 145);
+    --success-foreground: #191815;
+    --warning: oklch(0.78 0.11 85);
+    --warning-foreground: #191815;
+    --info: oklch(0.68 0.07 250);
+    --info-foreground: #191815;
+    --border: #32302a;
+    --input: #32302a;
+    --ring: #4a4640;
+    --border-light: #2a2823;
+    --input-border: #3d3a33;
+    --chart-1: #edebe6;
+    --chart-2: #9b968c;
+    --chart-3: #6f6a61;
+    --chart-4: #4a4640;
+    --chart-5: #32302a;
+    --radius: 0.625rem;
+    --sidebar: #1e1c19;
+    --sidebar-foreground: #edebe6;
+    --sidebar-primary: #edebe6;
+    --sidebar-primary-foreground: #191815;
+    --sidebar-accent: #2a2823;
+    --sidebar-accent-foreground: #edebe6;
+    --sidebar-border: #32302a;
+    --sidebar-ring: #4a4640;
 }
 
 @layer base {
