@@ -355,8 +355,13 @@
  * because which one applies depends on the version and an unknown custom property is
  * simply ignored -- so covering both costs nothing and surviving an upgrade is worth it.
  */
-.excalidraw.theme--dark,
-.excalidraw {
+/* The doubled classes are deliberate. Excalidraw ships its own stylesheet as a separate
+ * file, and its defaults sit on `.excalidraw` and `.excalidraw.theme--dark` -- the same
+ * specificity these rules would otherwise have, which leaves the winner decided by which
+ * file the bundler happens to emit last. Repeating the class raises specificity by one
+ * without changing what is matched, so the outcome no longer depends on load order. */
+.excalidraw.theme--dark.theme--dark,
+.excalidraw.excalidraw {
   --island-bg-color: #211f1b;
   --default-bg-color: #191815;
   --popup-bg-color: #211f1b;
