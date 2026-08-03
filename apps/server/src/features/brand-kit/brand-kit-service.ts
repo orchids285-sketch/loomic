@@ -247,7 +247,7 @@ export function createBrandKitService(options: {
 
     async createKit(user, input) {
       const client = options.createUserClient(user.accessToken);
-      const name = input.name?.trim() || "\u672A\u547D\u540D";
+      const name = input.name?.trim() || "Untitled";
 
       const { data: kit, error } = await client
         .from("brand_kits")

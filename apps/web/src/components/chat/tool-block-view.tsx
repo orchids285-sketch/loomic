@@ -349,7 +349,7 @@ const MediaShimmer = React.memo(function MediaShimmer({
       </div>
       <div className="px-3 py-2">
         <div className="text-[12px] font-medium text-muted-foreground/70">
-          {isVideoTool ? "\u89c6\u9891\u751f\u6210\u4e2d..." : "\u56fe\u7247\u751f\u6210\u4e2d..."}
+          {isVideoTool ? "Generating video..." : "Generating image..."}
         </div>
         {modelName && (
           <div className="mt-0.5 text-[11px] text-muted-foreground truncate">
@@ -388,7 +388,7 @@ const MediaErrorCard = React.memo(function MediaErrorCard({
         </div>
         <div className="min-w-0 flex-1">
           <div className="text-sm font-semibold text-foreground">
-            {isVideoTool ? "\u89c6\u9891\u751f\u6210\u5931\u8d25" : "\u56fe\u7247\u751f\u6210\u5931\u8d25"}
+            {isVideoTool ? "Video generation failed" : "Image generation failed"}
           </div>
           <div className="mt-0.5 text-[12px] text-muted-foreground line-clamp-2">
             {error}
@@ -452,7 +452,7 @@ const ImageArtifactCard = React.memo(function ImageArtifactCard({
             type="button"
             onClick={handleDownload}
             className="absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors"
-            title="\u4e0b\u8f7d\u56fe\u7247"
+            title="Download image"
           >
             <svg
               className="h-3.5 w-3.5"

@@ -152,7 +152,7 @@ export function useChatStream(updateSessionMessages: MessageUpdater) {
               // Mark all running tool blocks as completed so spinners stop
               const blocks = m.contentBlocks.map((block) =>
                 block.type === "tool" && block.status === "running"
-                  ? { ...block, status: "completed" as const, outputSummary: "\u5904\u7406\u5931\u8d25" }
+                  ? { ...block, status: "completed" as const, outputSummary: "Failed" }
                   : block,
               );
               const hasText = blocks.some((b) => b.type === "text");
@@ -164,7 +164,7 @@ export function useChatStream(updateSessionMessages: MessageUpdater) {
                       ...blocks,
                       {
                         type: "text" as const,
-                        text: "\u62b1\u6b49\uff0c\u5904\u7406\u8fc7\u7a0b\u4e2d\u9047\u5230\u95ee\u9898\uff0c\u8bf7\u91cd\u8bd5\u3002",
+                        text: "Sorry, something went wrong. Please try again.",
                       },
                     ],
               };

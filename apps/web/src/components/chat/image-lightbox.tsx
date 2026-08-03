@@ -203,7 +203,7 @@ export function ImageLightbox({
       {/* Close button */}
       <button
         type="button"
-        title="\u5173\u95ed (Esc)"
+        title="Close (Esc)"
         onClick={onClose}
         className="absolute top-4 right-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 text-white/80 backdrop-blur-md transition-colors hover:bg-black/60 hover:text-white"
       >
@@ -225,41 +225,41 @@ export function ImageLightbox({
         className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-1 rounded-full bg-black/50 px-2 py-1.5 backdrop-blur-md"
         onClick={(e) => e.stopPropagation()}
       >
-        <LightboxBtn title="\u7f29\u5c0f (-)" onClick={handleZoomOut}>
+        <LightboxBtn title="Zoom out (-)" onClick={handleZoomOut}>
           <path d="M5 12h14" />
         </LightboxBtn>
         <span className="min-w-[42px] text-center text-xs text-white/80 select-none">
           {Math.round(scale * 100)}%
         </span>
-        <LightboxBtn title="\u653e\u5927 (+)" onClick={handleZoomIn}>
+        <LightboxBtn title="Zoom in (+)" onClick={handleZoomIn}>
           <path d="M12 5v14M5 12h14" />
         </LightboxBtn>
         <div className="mx-1 h-4 w-px bg-white/20" />
-        <LightboxBtn title="\u5de6\u53f3\u7ffb\u8f6c" onClick={handleFlipX}>
+        <LightboxBtn title="Flip horizontally" onClick={handleFlipX}>
           <path d="M8 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3" />
           <path d="M16 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3" />
           <path d="M12 20V4" />
         </LightboxBtn>
-        <LightboxBtn title="\u4e0a\u4e0b\u7ffb\u8f6c" onClick={handleFlipY}>
+        <LightboxBtn title="Flip vertically" onClick={handleFlipY}>
           <path d="M3 8V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3" />
           <path d="M3 16v3a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3" />
           <path d="M4 12h16" />
         </LightboxBtn>
         <div className="mx-1 h-4 w-px bg-white/20" />
-        <LightboxBtn title="\u9006\u65f6\u9488\u65cb\u8f6c" onClick={handleRotateCCW}>
+        <LightboxBtn title="Rotate left" onClick={handleRotateCCW}>
           <path d="M3.51 15a9 9 0 1 0 2.13-9.36L3 8" />
           <path d="M3 3v5h5" />
         </LightboxBtn>
-        <LightboxBtn title="\u987a\u65f6\u9488\u65cb\u8f6c (R)" onClick={handleRotateCW}>
+        <LightboxBtn title="Rotate right (R)" onClick={handleRotateCW}>
           <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" />
           <path d="M21 3v5h-5" />
         </LightboxBtn>
         <div className="mx-1 h-4 w-px bg-white/20" />
-        <LightboxBtn title="\u91cd\u7f6e" onClick={handleReset}>
+        <LightboxBtn title="Reset" onClick={handleReset}>
           <circle cx="12" cy="12" r="3" />
           <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
         </LightboxBtn>
-        <LightboxBtn title="\u4e0b\u8f7d" onClick={handleDownload}>
+        <LightboxBtn title="Download" onClick={handleDownload}>
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
         </LightboxBtn>
       </div>
